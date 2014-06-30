@@ -1,0 +1,20 @@
+package ru.vyarus.guice.ext.managed;
+
+import ru.vyarus.guice.ext.core.method.MethodPostProcessor;
+import ru.vyarus.guice.ext.core.util.Utils;
+
+import javax.annotation.PostConstruct;
+import java.lang.reflect.Method;
+
+/**
+ * @author Vyacheslav Rusakov
+ * @since 30.06.2014
+ */
+public class PostConstructAnnotationProcessor implements MethodPostProcessor<PostConstruct> {
+
+    @Override
+    public void process(PostConstruct annotation, Method method, Object instance) throws Exception {
+        Utils.checkNoParams(method);
+        method.invoke(instance);
+    }
+}
