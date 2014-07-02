@@ -156,7 +156,7 @@ bindListener(typeMatcher, new AnnotatedMethodTypeListener<PostConstruct>(
                 PostConstruct.class, new PostConstructAnnotationProcessor()));
 ```
 
-#### Custom type post processor
+##### Custom type post processor
 
 Implement `ru.vyarus.guice.ext.core.type.TypePostProcessor`.
 Handle only recoverable exceptions, otherwise it will be handled by `GeneralTypeListener`.
