@@ -26,7 +26,7 @@ public class DestroyableManager implements Runnable {
      * @see ru.vyarus.guice.ext.managed.PostConstructAnnotationProcessor regsters annotated methods
      * @see ru.vyarus.guice.ext.managed.DestroyableTypeProcessor registers beans anootated with {@code Destroyable}
      */
-    public void register(Destroyable destroyable) {
+    public void register(final Destroyable destroyable) {
         // assuming single thread injector creation
         destroyListeners.add(destroyable);
     }

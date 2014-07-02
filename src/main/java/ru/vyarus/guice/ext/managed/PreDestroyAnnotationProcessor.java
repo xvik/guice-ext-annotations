@@ -18,12 +18,12 @@ public class PreDestroyAnnotationProcessor implements MethodPostProcessor<PreDes
 
     private DestroyableManager manager;
 
-    public PreDestroyAnnotationProcessor(DestroyableManager manager) {
+    public PreDestroyAnnotationProcessor(final DestroyableManager manager) {
         this.manager = manager;
     }
 
     @Override
-    public void process(PreDestroy annotation, Method method, Object instance) throws Exception {
+    public void process(final PreDestroy annotation, final Method method, final Object instance) throws Exception {
         Utils.checkNoParams(method);
         manager.register(new AnnotatedMethodDestroyable(method, instance));
     }

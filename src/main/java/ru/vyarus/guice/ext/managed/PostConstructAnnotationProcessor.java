@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 public class PostConstructAnnotationProcessor implements MethodPostProcessor<PostConstruct> {
 
     @Override
-    public void process(PostConstruct annotation, Method method, Object instance) throws Exception {
+    public void process(final PostConstruct annotation, final Method method, final Object instance) throws Exception {
         Utils.checkNoParams(method);
         method.invoke(instance);
     }

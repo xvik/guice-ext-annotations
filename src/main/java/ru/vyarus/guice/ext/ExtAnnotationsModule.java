@@ -50,13 +50,13 @@ public class ExtAnnotationsModule extends AbstractModule {
      *
      * @param typeMatcher matcher to select beans for annotations processing
      */
-    public ExtAnnotationsModule(Matcher<Object> typeMatcher) {
+    public ExtAnnotationsModule(final Matcher<Object> typeMatcher) {
         this.typeMatcher = typeMatcher;
     }
 
     @Override
     protected void configure() {
-        DestroyableManager manager = configureManager(new DestroyableManager());
+        final DestroyableManager manager = configureManager(new DestroyableManager());
 
         bindListener(typeMatcher, new GeneralTypeListener<Destroyable>(
                 Destroyable.class, new DestroyableTypeProcessor(manager)));
@@ -78,7 +78,7 @@ public class ExtAnnotationsModule extends AbstractModule {
      * @param manager destroyable manager instance
      * @return manager instance
      */
-    protected DestroyableManager configureManager(DestroyableManager manager) {
+    protected DestroyableManager configureManager(final DestroyableManager manager) {
         bind(DestroyableManager.class).toInstance(manager);
         // if logic will not call destroy at least it will be called before jvm shutdown
         Runtime.getRuntime().addShutdownHook(new Thread(manager));

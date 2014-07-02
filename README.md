@@ -143,7 +143,7 @@ For example:
 public class PostConstructAnnotationProcessor implements MethodPostProcessor<PostConstruct> {
 
     @Override
-    public void process(PostConstruct annotation, Method method, Object instance) throws Exception {
+    public void process(final PostConstruct annotation, final Method method, final Object instance) throws Exception {
         Utils.checkNoParams(method);
         method.invoke(instance);
     }
@@ -168,12 +168,12 @@ For example:
 public class DestroyableTypeProcessor implements TypePostProcessor<Destroyable> {
     private DestroyableManager manager;
 
-    public DestroyableTypeProcessor(DestroyableManager manager) {
+    public DestroyableTypeProcessor(final DestroyableManager manager) {
         this.manager = manager;
     }
 
     @Override
-    public void process(Destroyable instance) {
+    public void process(final Destroyable instance) {
         manager.register(instance);
     }
 }

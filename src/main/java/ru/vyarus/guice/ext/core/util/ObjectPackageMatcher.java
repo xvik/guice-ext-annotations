@@ -19,7 +19,7 @@ public class ObjectPackageMatcher<T> extends AbstractMatcher<T> {
 
     @Override
     public boolean matches(final T o) {
-        Class<?> type = o instanceof TypeLiteral ? ((TypeLiteral) o).getRawType() : o.getClass();
+        final Class<?> type = o instanceof TypeLiteral ? ((TypeLiteral) o).getRawType() : o.getClass();
         return Utils.isPackageValid(type) && type.getPackage().getName().startsWith(pkg);
     }
 }

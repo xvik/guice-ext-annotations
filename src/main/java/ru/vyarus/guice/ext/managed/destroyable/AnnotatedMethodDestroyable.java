@@ -13,7 +13,7 @@ public class AnnotatedMethodDestroyable implements Destroyable {
     private Method method;
     private Object instance;
 
-    public AnnotatedMethodDestroyable(Method method, Object instance) {
+    public AnnotatedMethodDestroyable(final Method method, final Object instance) {
         this.method = method;
         this.instance = instance;
     }
