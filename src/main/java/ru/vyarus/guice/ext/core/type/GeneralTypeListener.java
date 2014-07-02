@@ -7,6 +7,8 @@ import com.google.inject.spi.TypeListener;
 import ru.vyarus.guice.ext.core.util.Utils;
 
 /**
+ * Generic type listener for bean types (exact class, by base class or beans annotating interface).
+ *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
  */
@@ -15,7 +17,7 @@ public class GeneralTypeListener<T> implements TypeListener {
     private Class<T> typeClass;
     private TypePostProcessor<T> postProcessor;
 
-    public GeneralTypeListener(Class<T> typeClass, TypePostProcessor<T> postProcessor) {
+    public GeneralTypeListener(final Class<T> typeClass, final TypePostProcessor<T> postProcessor) {
         this.typeClass = typeClass;
         this.postProcessor = postProcessor;
     }
@@ -35,7 +37,7 @@ public class GeneralTypeListener<T> implements TypeListener {
                         postProcessor.process((T) injectee);
                     } catch (Exception ex) {
                         throw new IllegalStateException(
-                                String.format("Failed to process type %s of class %s instance",
+                                String.format("Failed to process type %s of class %s",
                                         typeClass.getSimpleName(), injectee.getClass().getSimpleName()), ex);
                     }
                 }
@@ -43,14 +45,18 @@ public class GeneralTypeListener<T> implements TypeListener {
         }
     }
 
-    private boolean checkType(Class check) {
+    /**
+     * @param check class to check
+     * @return true if type is assignable from required type or implements interface (directly or on any hierarchy level), false otherwise
+     */
+    private boolean checkType(final Class<?> check) {
         if (check.isAssignableFrom(typeClass)) {
             return true;
         }
         if (typeClass.isInterface()) {
-            Class investigating = check;
+            Class<?> investigating = check;
             while (investigating != null && !investigating.equals(Object.class)) {
-                for (Class test : investigating.getInterfaces()) {
+                for (Class<?> test : investigating.getInterfaces()) {
                     if (test.equals(typeClass)) {
                         return true;
                     }

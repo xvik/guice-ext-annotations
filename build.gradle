@@ -23,7 +23,7 @@ apply plugin: 'rest'
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
-version = '0.0.1'
+version = '1.0.0'
 group = 'ru.vyarus'
 description = 'Additional guice annotations'
 
@@ -111,7 +111,7 @@ bintrayPublish.doFirst {
 bintrayPublish.mustRunAfter bintrayUpload
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.0-rc-2'
+    gradleVersion = '2.0'
 }
 
 task install(dependsOn: 'publishMavenJavaPublicationToMavenLocal', description: 'install to local maven repo only') << {

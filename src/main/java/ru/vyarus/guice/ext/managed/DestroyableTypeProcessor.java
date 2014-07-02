@@ -1,13 +1,12 @@
 package ru.vyarus.guice.ext.managed;
 
-import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeEncounter;
-import com.google.inject.spi.TypeListener;
 import ru.vyarus.guice.ext.core.type.TypePostProcessor;
 import ru.vyarus.guice.ext.managed.destroyable.Destroyable;
 import ru.vyarus.guice.ext.managed.destroyable.DestroyableManager;
 
 /**
+ * Registers beans implementing {@code Destroyable} interface to {@code DestroyableManager} to be executed on shutdown.
+ *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
  */

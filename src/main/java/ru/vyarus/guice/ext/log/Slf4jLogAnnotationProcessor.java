@@ -7,14 +7,16 @@ import ru.vyarus.guice.ext.core.field.FieldPostProcessor;
 import java.lang.reflect.Field;
 
 /**
+ * Injects {@code org.slf4j.Logger} instance into fields annotated with @Log annotation.
+ *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
  */
 public class Slf4jLogAnnotationProcessor implements FieldPostProcessor<Log> {
 
     @Override
-    public void process(Log annotation, Field field, Object instance) throws Exception {
-        Logger logger = LoggerFactory.getLogger(field.getDeclaringClass());
+    public void process(final Log annotation, final Field field, final Object instance) throws Exception {
+        final Logger logger = LoggerFactory.getLogger(field.getDeclaringClass());
         field.set(instance, logger);
     }
 }

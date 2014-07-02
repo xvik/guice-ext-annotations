@@ -9,6 +9,8 @@ import javax.annotation.PreDestroy;
 import java.lang.reflect.Method;
 
 /**
+ * Registers bean methods annotated with @PostConstruct in {@code DestroyableManager} to be called on shutdown.
+ *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
  */

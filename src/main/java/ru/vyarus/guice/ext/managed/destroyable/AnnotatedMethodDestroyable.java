@@ -3,6 +3,8 @@ package ru.vyarus.guice.ext.managed.destroyable;
 import java.lang.reflect.Method;
 
 /**
+ * Destroyable annotation used to call @PostConstruct annotated methods on context destroy.
+ *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
  */
@@ -17,7 +19,7 @@ public class AnnotatedMethodDestroyable implements Destroyable {
     }
 
     @Override
-    public void preDestroy() throws Exception{
+    public void preDestroy() throws Exception {
         method.invoke(instance);
     }
 }

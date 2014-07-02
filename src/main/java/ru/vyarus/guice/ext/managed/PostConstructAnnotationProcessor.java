@@ -7,6 +7,8 @@ import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
 
 /**
+ * Process bean @PostConstruct annotated methods: executes annotated method just after bean initialization.
+ *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
  */

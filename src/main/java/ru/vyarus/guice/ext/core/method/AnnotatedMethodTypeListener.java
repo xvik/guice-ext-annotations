@@ -10,6 +10,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
+ * Generic type listener to process annotated methods after bean instantiation.
+ *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
  */
@@ -19,8 +21,8 @@ public class AnnotatedMethodTypeListener<T extends Annotation> implements TypeLi
     private MethodPostProcessor<T> postProcessor;
 
 
-    public AnnotatedMethodTypeListener(Class<T> annotationClass,
-                                       MethodPostProcessor<T> postProcessor) {
+    public AnnotatedMethodTypeListener(final Class<T> annotationClass,
+                                       final MethodPostProcessor<T> postProcessor) {
         this.annotationClass = annotationClass;
         this.postProcessor = postProcessor;
     }
@@ -43,7 +45,7 @@ public class AnnotatedMethodTypeListener<T extends Annotation> implements TypeLi
                                 postProcessor.process(method.getAnnotation(annotationClass), method, injectee);
                             } catch (Exception ex) {
                                 throw new IllegalStateException(
-                                        String.format("Failed to process annotation %s on method %s of class %s instance",
+                                        String.format("Failed to process annotation %s on method %s of class %s",
                                                 annotationClass.getSimpleName(), method.getName(), injectee.getClass().getSimpleName()), ex);
                             }
                         }

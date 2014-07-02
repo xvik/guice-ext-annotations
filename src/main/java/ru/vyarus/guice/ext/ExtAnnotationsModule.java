@@ -19,6 +19,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 /**
+ * Additional annotations support module: @PostConstruct, @PreDestroy, @Log
+ *
  * @author Vyacheslav Rusakov
  * @since 29.06.2014
  */
@@ -26,14 +28,28 @@ public class ExtAnnotationsModule extends AbstractModule {
 
     private Matcher<Object> typeMatcher;
 
+    /**
+     * Default module constructor to check annotations on all beans.
+     */
     public ExtAnnotationsModule() {
         this(Matchers.any());
     }
 
+    /**
+     * Constructs annotation module with annotation scan limited to provided package.
+     * (used mainly for startup performance optimization)
+     *
+     * @param pkg package to limit beans, where annotations processed
+     */
     public ExtAnnotationsModule(final String pkg) {
         this(new ObjectPackageMatcher<Object>(pkg));
     }
 
+    /**
+     * Constructs annotation module with custom bean matcher for annotations processing.
+     *
+     * @param typeMatcher matcher to select beans for annotations processing
+     */
     public ExtAnnotationsModule(Matcher<Object> typeMatcher) {
         this.typeMatcher = typeMatcher;
     }
@@ -56,6 +72,12 @@ public class ExtAnnotationsModule extends AbstractModule {
     }
 
 
+    /**
+     * Registers destroyable manager in injector and adds shutdown hook to process destroy on jvm shutdown.
+     *
+     * @param manager destroyable manager instance
+     * @return manager instance
+     */
     protected DestroyableManager configureManager(DestroyableManager manager) {
         bind(DestroyableManager.class).toInstance(manager);
         // if logic will not call destroy at least it will be called before jvm shutdown
