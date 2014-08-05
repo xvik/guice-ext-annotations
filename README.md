@@ -1,6 +1,6 @@
 #Additional guice annotations
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.org/xvik/guice-ext-annotations.svg?branch=master)](https://travis-ci.org/xvik/guice-ext-annotations)
+[![Build Status](http://img.shields.io/travis/xvik/guice-ext-annotations.svg?style=flat&branch=master)](https://travis-ci.org/xvik/guice-ext-annotations)
 [ ![Download](https://api.bintray.com/packages/vyarus/xvik/guice-ext-annotations/images/download.png) ](https://bintray.com/vyarus/xvik/guice-ext-annotations/_latestVersion)
 
 ### About
