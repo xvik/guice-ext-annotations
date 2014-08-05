@@ -1,4 +1,5 @@
 #Additional guice annotations
+[![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/xvik/guice-ext-annotations.svg?branch=master)](https://travis-ci.org/xvik/guice-ext-annotations)
 [ ![Download](https://api.bintray.com/packages/vyarus/xvik/guice-ext-annotations/images/download.png) ](https://bintray.com/vyarus/xvik/guice-ext-annotations/_latestVersion)
 
@@ -191,7 +192,3 @@ bindListener(typeMatcher, new GeneralTypeListener<Destroyable>(
 ### Thanks to
 
 [99soft lifegycle](https://github.com/99soft/lifegycle) for inspiration.
-
-### Licence
-
-MIT
