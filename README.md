@@ -194,4 +194,5 @@ bindListener(typeMatcher, new GeneralTypeListener<Destroyable>(
 
 [99soft lifegycle](https://github.com/99soft/lifegycle) for inspiration.
 
+-
 [![Slush java lib generator](http://img.shields.io/badge/Powered%20by-Slush%20java%20lib%20generator-orange.svg?style=flat-square)](https://github.com/xvik/slush-lib-java)
