@@ -9,6 +9,7 @@ import com.google.inject.matcher.AbstractMatcher;
  *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
+ * @param <T> matched object type
  */
 public class ObjectPackageMatcher<T> extends AbstractMatcher<T> {
     private String pkg;

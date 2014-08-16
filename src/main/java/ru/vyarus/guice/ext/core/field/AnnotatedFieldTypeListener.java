@@ -14,6 +14,7 @@ import java.lang.reflect.Field;
  *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
+ * @param <T> annotation type
  */
 public class AnnotatedFieldTypeListener<T extends Annotation> implements TypeListener {
 
@@ -37,14 +38,15 @@ public class AnnotatedFieldTypeListener<T extends Annotation> implements TypeLis
                 if (field.isAnnotationPresent(annotationClass)) {
                     encounter.register(new InjectionListener<I>() {
                         @Override
-                        public void afterInjection(I injectee) {
+                        public void afterInjection(final I injectee) {
                             try {
                                 field.setAccessible(true);
                                 postProcessor.process(field.getAnnotation(annotationClass), field, injectee);
                             } catch (Exception ex) {
                                 throw new IllegalStateException(
                                         String.format("Failed to process annotation %s on field %s of class %s",
-                                                annotationClass.getSimpleName(), field.getName(), injectee.getClass().getSimpleName()), ex);
+                                                annotationClass.getSimpleName(), field.getName(),
+                                                injectee.getClass().getSimpleName()), ex);
                             }
                         }
                     });

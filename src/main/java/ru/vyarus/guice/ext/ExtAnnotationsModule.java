@@ -19,11 +19,12 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 /**
- * Additional annotations support module: @PostConstruct, @PreDestroy, @Log
+ * Additional annotations support module: @PostConstruct, @PreDestroy, @Log.
  *
  * @author Vyacheslav Rusakov
  * @since 29.06.2014
  */
+@SuppressWarnings("checkstyle:classdataabstractioncoupling")
 public class ExtAnnotationsModule extends AbstractModule {
 
     private Matcher<Object> typeMatcher;

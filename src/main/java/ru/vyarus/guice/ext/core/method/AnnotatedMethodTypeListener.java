@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
  *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
+ * @param <T> annotation type
  */
 public class AnnotatedMethodTypeListener<T extends Annotation> implements TypeListener {
 
@@ -39,14 +40,15 @@ public class AnnotatedMethodTypeListener<T extends Annotation> implements TypeLi
                 if (method.isAnnotationPresent(annotationClass)) {
                     encounter.register(new InjectionListener<I>() {
                         @Override
-                        public void afterInjection(I injectee) {
+                        public void afterInjection(final I injectee) {
                             try {
                                 method.setAccessible(true);
                                 postProcessor.process(method.getAnnotation(annotationClass), method, injectee);
                             } catch (Exception ex) {
                                 throw new IllegalStateException(
                                         String.format("Failed to process annotation %s on method %s of class %s",
-                                                annotationClass.getSimpleName(), method.getName(), injectee.getClass().getSimpleName()), ex);
+                                                annotationClass.getSimpleName(), method.getName(),
+                                                injectee.getClass().getSimpleName()), ex);
                             }
                         }
                     });

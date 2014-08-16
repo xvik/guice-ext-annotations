@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
  *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
+ * @param <T> annotation type
  */
 public interface MethodPostProcessor<T extends Annotation> {
 

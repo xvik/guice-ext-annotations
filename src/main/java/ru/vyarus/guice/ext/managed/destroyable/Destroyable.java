@@ -1,7 +1,7 @@
 package ru.vyarus.guice.ext.managed.destroyable;
 
 /**
- * Marker interface for beans which require some finalization logic (@PostConstract alternative)
+ * Marker interface for beans which require some finalization logic (@PostConstruct alternative).
  *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014

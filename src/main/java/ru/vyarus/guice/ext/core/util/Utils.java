@@ -15,7 +15,7 @@ public final class Utils {
 
     /**
      * Important check, because JDK proxies of public interfaces have no package
-     * (thanks to @binkley https://github.com/99soft/lifegycle/pull/5)
+     * (thanks to @binkley https://github.com/99soft/lifegycle/pull/5).
      *
      * @param type class type to check
      * @return true if package could be resolved, false otherwise
@@ -32,7 +32,8 @@ public final class Utils {
      * @param method method to check
      */
     public static void checkNoParams(final Method method) {
-        if (method.getParameterTypes().length > 0)
+        if (method.getParameterTypes().length > 0) {
             throw new IllegalStateException("Method without parameters required");
+        }
     }
 }

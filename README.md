@@ -24,14 +24,14 @@ Maven:
 <dependency>
   <groupId>ru.vyarus</groupId>
   <artifactId>guice-ext-annotations</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
 Gradle:
 
 ```groovy
-compile 'ru.vyarus:guice-ext-annotations:1.0.0'
+compile 'ru.vyarus:guice-ext-annotations:1.0.1'
 ```
 
 ### Install the Guice module
@@ -193,3 +193,5 @@ bindListener(typeMatcher, new GeneralTypeListener<Destroyable>(
 ### Thanks to
 
 [99soft lifegycle](https://github.com/99soft/lifegycle) for inspiration.
+
+[![Slush java lib generator](http://img.shields.io/badge/Powered%20by-Slush%20java%20lib%20generator-orange.svg?style=flat-square)](https://github.com/xvik/slush-lib-java)

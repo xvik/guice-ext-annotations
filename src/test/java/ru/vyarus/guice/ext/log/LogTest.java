@@ -3,13 +3,12 @@ package ru.vyarus.guice.ext.log;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import ru.vyarus.guice.ext.ExtAnnotationsModule;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Vyacheslav Rusakov

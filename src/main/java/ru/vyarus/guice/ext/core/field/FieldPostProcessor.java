@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
  *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
+ * @param <T> annotation type
  */
 public interface FieldPostProcessor<T extends Annotation> {
 

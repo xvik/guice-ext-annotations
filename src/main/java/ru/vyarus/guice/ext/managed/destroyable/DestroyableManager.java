@@ -33,7 +33,8 @@ public class DestroyableManager implements Runnable {
 
     /**
      * Called on context shutdown to call all registered destroyable instances.
-     * By default called on jvm shutdown, but may be called manually to synchronise with some other container shutdown (e.g. web container)
+     * By default called on jvm shutdown, but may be called manually to synchronise with
+     * some other container shutdown (e.g. web container)
      * Safe to call many times, but all destroy instances will be processed only on first call.
      * Thread safe.
      */

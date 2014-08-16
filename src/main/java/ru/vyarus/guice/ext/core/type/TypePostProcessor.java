@@ -5,6 +5,7 @@ package ru.vyarus.guice.ext.core.type;
  *
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
+ * @param <T> bean type
  */
 public interface TypePostProcessor<T> {
 

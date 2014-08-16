@@ -9,6 +9,7 @@ import ru.vyarus.guice.ext.core.util.Utils;
 /**
  * Generic type listener for bean types (exact class, by base class or beans annotating interface).
  *
+ * @param <T> bean type
  * @author Vyacheslav Rusakov
  * @since 30.06.2014
  */
@@ -32,7 +33,7 @@ public class GeneralTypeListener<T> implements TypeListener {
         if (checkType(actualType)) {
             encounter.register(new InjectionListener<I>() {
                 @Override
-                public void afterInjection(I injectee) {
+                public void afterInjection(final I injectee) {
                     try {
                         postProcessor.process((T) injectee);
                     } catch (Exception ex) {
@@ -47,7 +48,8 @@ public class GeneralTypeListener<T> implements TypeListener {
 
     /**
      * @param check class to check
-     * @return true if type is assignable from required type or implements interface (directly or on any hierarchy level), false otherwise
+     * @return true if type is assignable from required type or implements interface
+     * (directly or on any hierarchy level), false otherwise
      */
     private boolean checkType(final Class<?> check) {
         if (check.isAssignableFrom(typeClass)) {
