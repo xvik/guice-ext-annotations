@@ -18,8 +18,8 @@ import java.lang.reflect.Method;
  */
 public class AnnotatedMethodTypeListener<T extends Annotation> implements TypeListener {
 
-    private Class<T> annotationClass;
-    private MethodPostProcessor<T> postProcessor;
+    private final Class<T> annotationClass;
+    private final MethodPostProcessor<T> postProcessor;
 
 
     public AnnotatedMethodTypeListener(final Class<T> annotationClass,
@@ -29,6 +29,7 @@ public class AnnotatedMethodTypeListener<T extends Annotation> implements TypeLi
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public <I> void hear(final TypeLiteral<I> type, final TypeEncounter<I> encounter) {
         final Class<? super I> actualType = type.getRawType();
         if (!Utils.isPackageValid(actualType)) {

@@ -5,7 +5,6 @@ buildscript {
     apply from: "gradle/buildscript.gradle", to: buildscript
 }
 
-version = '1.0.1'
 group = 'ru.vyarus'
 description = 'Additional guice annotations'
 
@@ -56,6 +55,7 @@ sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
 apply from: 'gradle/github.gradle'
+apply from: 'gradle/release.gradle'
 apply from: 'gradle/maven.gradle'
 apply from: 'gradle/bintray.gradle'
 apply from: 'gradle/quality.gradle'
@@ -70,7 +70,6 @@ repositories {
 dependencies {
     compile 'com.google.inject:guice:3.0'
     compile 'org.slf4j:slf4j-api:1.7.7'
-
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile 'org.slf4j:slf4j-nop:1.7.7'
@@ -89,11 +88,12 @@ task showDependenciesTree(dependsOn: 'htmlDependencyReport', description:
     Desktop.getDesktop().open(file('/build/reports/project/dependencies/root.html'))
 }
 
-
 task install(dependsOn: 'publishMavenJavaPublicationToMavenLocal', description: 'Install to local maven repository') << {
     logger.warn "INSTALLED $project.group:$project.name:$project.version"
 }
 
-task release(dependsOn: [bintrayUpload, bintraySign], description: 'Publish version to bintray') << {
+//release task provided by gradle-release plugin
+createReleaseTag.dependsOn bintrayUpload, bintraySign
+release.doLast {
     logger.warn "RELEASED $project.group:$project.name:$project.version"
 }

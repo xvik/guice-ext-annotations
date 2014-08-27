@@ -11,7 +11,7 @@ import ru.vyarus.guice.ext.managed.destroyable.DestroyableManager;
  * @since 30.06.2014
  */
 public class DestroyableTypeProcessor implements TypePostProcessor<Destroyable> {
-    private DestroyableManager manager;
+    private final DestroyableManager manager;
 
     public DestroyableTypeProcessor(final DestroyableManager manager) {
         this.manager = manager;

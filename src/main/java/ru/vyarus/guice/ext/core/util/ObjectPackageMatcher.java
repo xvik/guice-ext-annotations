@@ -12,7 +12,7 @@ import com.google.inject.matcher.AbstractMatcher;
  * @param <T> matched object type
  */
 public class ObjectPackageMatcher<T> extends AbstractMatcher<T> {
-    private String pkg;
+    private final String pkg;
 
     public ObjectPackageMatcher(final String pkg) {
         this.pkg = pkg;

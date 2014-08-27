@@ -15,8 +15,8 @@ import ru.vyarus.guice.ext.core.util.Utils;
  */
 public class GeneralTypeListener<T> implements TypeListener {
 
-    private Class<T> typeClass;
-    private TypePostProcessor<T> postProcessor;
+    private final Class<T> typeClass;
+    private final TypePostProcessor<T> postProcessor;
 
     public GeneralTypeListener(final Class<T> typeClass, final TypePostProcessor<T> postProcessor) {
         this.typeClass = typeClass;
@@ -52,20 +52,19 @@ public class GeneralTypeListener<T> implements TypeListener {
      * (directly or on any hierarchy level), false otherwise
      */
     private boolean checkType(final Class<?> check) {
-        if (check.isAssignableFrom(typeClass)) {
-            return true;
-        }
-        if (typeClass.isInterface()) {
+        boolean res = check.isAssignableFrom(typeClass);
+        if (!res && typeClass.isInterface()) {
             Class<?> investigating = check;
-            while (investigating != null && !investigating.equals(Object.class)) {
+            while (!res && investigating != null && !investigating.equals(Object.class)) {
                 for (Class<?> test : investigating.getInterfaces()) {
                     if (test.equals(typeClass)) {
-                        return true;
+                        res = true;
+                        break;
                     }
                 }
                 investigating = investigating.getSuperclass();
             }
         }
-        return false;
+        return res;
     }
 }

@@ -18,8 +18,8 @@ import java.lang.reflect.Field;
  */
 public class AnnotatedFieldTypeListener<T extends Annotation> implements TypeListener {
 
-    private Class<T> annotationClass;
-    private FieldPostProcessor<T> postProcessor;
+    private final Class<T> annotationClass;
+    private final FieldPostProcessor<T> postProcessor;
 
     public AnnotatedFieldTypeListener(final Class<T> annotationClass, final FieldPostProcessor<T> postProcessor) {
         this.annotationClass = annotationClass;
@@ -27,6 +27,7 @@ public class AnnotatedFieldTypeListener<T extends Annotation> implements TypeLis
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public <I> void hear(final TypeLiteral<I> type, final TypeEncounter<I> encounter) {
         final Class<? super I> actualType = type.getRawType();
         if (!Utils.isPackageValid(actualType)) {

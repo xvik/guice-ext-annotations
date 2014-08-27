@@ -10,8 +10,8 @@ import java.lang.reflect.Method;
  */
 public class AnnotatedMethodDestroyable implements Destroyable {
 
-    private Method method;
-    private Object instance;
+    private final Method method;
+    private final Object instance;
 
     public AnnotatedMethodDestroyable(final Method method, final Object instance) {
         this.method = method;

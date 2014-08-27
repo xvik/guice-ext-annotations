@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  */
 public class PreDestroyAnnotationProcessor implements MethodPostProcessor<PreDestroy> {
 
-    private DestroyableManager manager;
+    private final DestroyableManager manager;
 
     public PreDestroyAnnotationProcessor(final DestroyableManager manager) {
         this.manager = manager;
