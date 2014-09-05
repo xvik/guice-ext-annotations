@@ -2,7 +2,6 @@
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
 [![Build Status](http://img.shields.io/travis/xvik/guice-ext-annotations.svg?style=flat&branch=master)](https://travis-ci.org/xvik/guice-ext-annotations)
 [![Coverage Status](https://img.shields.io/coveralls/xvik/guice-ext-annotations.svg?style=flat)](https://coveralls.io/r/xvik/guice-ext-annotations?branch=master)
-[ ![Download](https://api.bintray.com/packages/vyarus/xvik/guice-ext-annotations/images/download.png) ](https://bintray.com/vyarus/xvik/guice-ext-annotations/_latestVersion)
 
 ### About
 
@@ -17,6 +16,9 @@ Also provides utilities to easily add new annotations support.
 
 Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter) (package appear immediately after release) 
 and then to maven central (require few days after release to be published). 
+
+[![Download](https://api.bintray.com/packages/vyarus/xvik/guice-ext-annotations/images/download.png) ](https://bintray.com/vyarus/xvik/guice-ext-annotations/_latestVersion)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/ru.vyarus/guice-ext-annotations/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/ru.vyarus/guice-ext-annotations)
 
 Maven:
 
