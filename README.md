@@ -82,7 +82,7 @@ All this allows thinking of abstract type as of usual guice bean.
 In order to use dynamic proxies, add dependency on javassist library:
 
 ```groovy
-optional 'org.javassist:javassist:3.16.1-GA'
+compile 'org.javassist:javassist:3.16.1-GA'
 ```
 
 NOTE: javassist used instead of cglib, because cglib can't manipulate annotations.
