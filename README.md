@@ -19,8 +19,6 @@ Features:
   * Add custom method annotation support
   * Add post processing for beans of some type (e.g. implementing interface or extending some abstract class)
 
-Also provides utilities to easily add new annotations support.
-
 ### Setup
 
 Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter) (package appear immediately after release) 
@@ -47,7 +45,8 @@ compile 'ru.vyarus:guice-ext-annotations:1.1.0'
 
 ### Abstract types support
 
-Feature was developed to support finders in [guice-persist-orient](https://github.com/xvik/guice-persist-orient#dynamic-finders-1).
+Feature was developed to support finders in [guice-persist-orient](https://github.com/xvik/guice-persist-orient#dynamic-finders-1)
+(look usage examples).
 
 #### Problem
 
