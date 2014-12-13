@@ -71,7 +71,7 @@ Guice needs to control bean instance creation to properly apply aop, so solution
 implementation class from abstract class or interface, and let guice instantiate bean from it.
 
 Additional actions during class generation:
-* Annotations copied from abstract type (class or interface) to allow aop correctly resole them
+* Annotations copied from abstract type (class or interface) to allow aop correctly resolve them
 * If abstract bean use constructor injection, the same constructor will be created in implementation (including all
 constructor and parameters annotations).
 
@@ -126,7 +126,7 @@ To workaround it use wrapper annotation:
 public interface MyAbstractType {...}
 ```
 
-NOTE: yes, annotation is named the same as guice's own annotation, but name is so good and they will never met in one class.
+NOTE: yes, annotation named the same as guice's own annotation, but name is so good and they will never met in one class.
 
 ### Additional annotations
 
