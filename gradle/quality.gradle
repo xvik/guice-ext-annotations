@@ -1,6 +1,10 @@
 /* Quality plugins checks applied during "gradle check" execution, so travis build will fail in case of quality problems
  * and its better to call check manually before push. */
 
+// enable detailed warnings (all options http://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html#BHCJCABJ)
+compileJava.options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+
+
 apply plugin: 'findbugs'
 
 // findbugs 3 supports java 8, but requires java 7!
