@@ -21,7 +21,9 @@ public final class Utils {
      * @return true if package could be resolved, false otherwise
      */
     public static boolean isPackageValid(final Class type) {
-        //
+        if (type == null) {
+            return false;
+        }
         final Package packaj = type.getPackage();
         return !(packaj == null || packaj.getName().startsWith("java"));
     }
