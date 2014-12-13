@@ -1,16 +1,23 @@
-#Additional guice annotations
+#Guice annotations extensions
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/xvik/guice-ext-annotations?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
 [![Build Status](http://img.shields.io/travis/xvik/guice-ext-annotations.svg?style=flat&branch=master)](https://travis-ci.org/xvik/guice-ext-annotations)
 [![Coverage Status](https://img.shields.io/coveralls/xvik/guice-ext-annotations.svg?style=flat)](https://coveralls.io/r/xvik/guice-ext-annotations?branch=master)
 
-
 ### About
 
-Supported annotations:
-* @Log: auto inject slf4j logger
-* JSR-250 @PostConstruct: annotated method called after bean initialization
-* JSR-250 @PreDestroy: annotated method called before shutdown
+Guice annotations support extensions.
+
+Features:
+* Allows using interfaces and abstract classes as guice beans: abstract methods must be handled with guice aop
+* Additional annotations:
+  * @Log: auto inject slf4j logger
+  * JSR-250 @PostConstruct: annotated method called after bean initialization
+  * JSR-250 @PreDestroy: annotated method called before shutdown
+* Simplifies [TypeListener](http://google.github.io/guice/api-docs/latest/javadoc/index.html?com/google/inject/spi/TypeListener.html) api for cases:
+  * Add custom field annotation support
+  * Add custom method annotation support
+  * Add post processing for beans of some type (e.g. implementing interface or extending some abstract class)
 
 Also provides utilities to easily add new annotations support.
 
@@ -28,17 +35,105 @@ Maven:
 <dependency>
   <groupId>ru.vyarus</groupId>
   <artifactId>guice-ext-annotations</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
 Gradle:
 
 ```groovy
-compile 'ru.vyarus:guice-ext-annotations:1.0.1'
+compile 'ru.vyarus:guice-ext-annotations:1.1.0'
 ```
 
-### Install the Guice module
+### Abstract types support
+
+Feature was developed to support finders in [guice-persist-orient](https://github.com/xvik/guice-persist-orient#dynamic-finders-1).
+
+#### Problem
+
+Suppose you have annotation to simplify sql query definition:
+
+```java
+@Finder(query = "select from Model")
+List<Model> list() {
+    throw new UnsupportedOperationException();
+}
+```
+
+Support for such annotation could be easily implemented with [guice aop](https://github.com/google/guice/wiki/AOP).
+But we will always have to declare method body.
+
+To avoid this, [guice-persist](https://github.com/google/guice/wiki/GuicePersist) creates JDK proxies from interfaces with annotated methods.
+It solves problem with redundant method body, but did not allow using guice aop on such beans.
+
+#### Solution
+
+Guice needs to control bean instance creation to properly apply aop, so solution is simple: dynamically create
+implementation class from abstract class or interface, so guice could instantiate bean from it.
+
+Additional actions during class generation:
+* Annotations copied from abstract type (class or interface) to allow aop correctly resole them
+* If abstract bean use constructor injection, the same constructor will be created in implementation (including all
+constructor and parameters annotations).
+
+All this allows thinking of abstract type as of usual guice bean.
+
+#### Setup
+
+In order to use dynamic proxies, add dependency on javassist library:
+
+```groovy
+optional 'org.javassist:javassist:3.16.1-GA'
+```
+
+NOTE: javassist used instead of cglib, because cglib can't manipulate annotations.
+
+#### Usage
+
+There are two options: declare bean directly in module or rely on JIT based declaration.
+
+For first option, generate class in your guice module:
+
+```java
+bind(MyAbstractType.class).to(DynamicClassGenerator.generate(MyAbstractType.class));
+```
+
+If you don't want to declare manually and prefer minimal configuration with
+[JIT](https://github.com/google/guice/wiki/JustInTimeBindings) bindings, use `@ProvidedBy`:
+
+```java
+@ProvidedBy(DynamicClassProvider.class)
+public interface MyAbstractType {...}
+```
+
+(the same for abstract class)
+
+After all, bean could be injected as usual:
+
+```java
+@Inject MyAbstractType myBean;
+```
+
+Don't forget that all abstract methods must be handled with aop: otherwise you will get abstract method call exception.
+
+#### Limitation
+
+There is only one limitation: you can't use scope annotations directly on abstract types - guice doesn't allow it.
+To workaround it use wrapper annotation:
+
+```java
+@ScopeAnnotation(Singleton.class)
+@ProvidedBy(DynamicClassProvider.class)
+public interface MyAbstractType {...}
+```
+
+NOTE: yes, annotation is named the same as guice's own annotation, but name is so good and they will never met in one class.
+
+### Additional annotations
+
+Guice module adds three annotations support (`@Log`, `@PostConstruct`, `@PreDestroy`) and `Destroyable` types.
+
+#### Install the Guice module
 
 ```java
 install(new ExtAnnotationsModule());
@@ -56,7 +151,7 @@ Alternatively custom object matcher may be used to reduce processed beans:
 install(new ExtAnnotationsModule(new YourCustomMatcher()));
 ```
 
-### Usage
+#### Usage
 
 ##### @Log
 
@@ -112,6 +207,8 @@ public class MyBean implements Destroyable
 ```
 
 ### Additional api
+
+Api simplifies work with [TypeListener](http://google.github.io/guice/api-docs/latest/javadoc/index.html?com/google/inject/spi/TypeListener.html).
 
 ##### Custom field annotation post processor
 

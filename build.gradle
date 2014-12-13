@@ -6,7 +6,7 @@ buildscript {
 }
 
 group = 'ru.vyarus'
-description = 'Additional guice annotations'
+description = 'Guice annotations extensions'
 
 // convention: project.name == github project name == bintray package page
 project.ext {
