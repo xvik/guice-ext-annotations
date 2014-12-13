@@ -20,12 +20,14 @@ public final class Utils {
      * @param type class type to check
      * @return true if package could be resolved, false otherwise
      */
+    @SuppressWarnings("PMD.BooleanInversion")
     public static boolean isPackageValid(final Class type) {
-        if (type == null) {
-            return false;
+        boolean res = false;
+        if (type != null) {
+            final Package packaj = type.getPackage();
+            res = !(packaj == null || packaj.getName().startsWith("java"));
         }
-        final Package packaj = type.getPackage();
-        return !(packaj == null || packaj.getName().startsWith("java"));
+        return res;
     }
 
     /**
