@@ -68,7 +68,7 @@ It solves problem with redundant method body, but did not allow using guice aop 
 #### Solution
 
 Guice needs to control bean instance creation to properly apply aop, so solution is simple: dynamically create
-implementation class from abstract class or interface, so guice could instantiate bean from it.
+implementation class from abstract class or interface, and let guice instantiate bean from it.
 
 Additional actions during class generation:
 * Annotations copied from abstract type (class or interface) to allow aop correctly resole them
