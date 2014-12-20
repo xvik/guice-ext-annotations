@@ -1,5 +1,5 @@
 #Guice annotations extensions
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/xvik/guice-ext-annotations?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xvik/guice-ext-annotations)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
 [![Build Status](http://img.shields.io/travis/xvik/guice-ext-annotations.svg?style=flat&branch=master)](https://travis-ci.org/xvik/guice-ext-annotations)
 [![Coverage Status](https://img.shields.io/coveralls/xvik/guice-ext-annotations.svg?style=flat)](https://coveralls.io/r/xvik/guice-ext-annotations?branch=master)
@@ -82,7 +82,7 @@ All this allows thinking of abstract type as of usual guice bean.
 In order to use dynamic proxies, add dependency on javassist library:
 
 ```groovy
-optional 'org.javassist:javassist:3.16.1-GA'
+compile 'org.javassist:javassist:3.16.1-GA'
 ```
 
 NOTE: javassist used instead of cglib, because cglib can't manipulate annotations.
