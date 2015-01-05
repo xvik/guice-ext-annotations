@@ -1,3 +1,5 @@
+### 1.1.1 (2015-01-06)
+
 * Fix recognition of javax.inject.Inject annotation during class generation
 * Generated class now contains valid generics signature (required for Provided parameters)
 * Add DynamicSingletonProvider: shortcut for DynamicClassProvider to produce singleton bean (without need for additional annotation)
