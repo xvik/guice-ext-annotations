@@ -33,14 +33,14 @@ Maven:
 <dependency>
   <groupId>ru.vyarus</groupId>
   <artifactId>guice-ext-annotations</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
 </dependency>
 ```
 
 Gradle:
 
 ```groovy
-compile 'ru.vyarus:guice-ext-annotations:1.1.0'
+compile 'ru.vyarus:guice-ext-annotations:1.1.1'
 ```
 
 ### Abstract types support
@@ -127,6 +127,20 @@ public interface MyAbstractType {...}
 ```
 
 NOTE: yes, annotation named the same as guice's own annotation, but name is so good and they will never met in one class.
+
+#### Singletons
+
+Singletons are pretty common case. To simplify singletons definition special provider could be used:
+
+```java
+@ProvidedBy(DynamicSingletonProvider.class)
+public interface MyAbstractType {...}
+```
+
+This is completely equivalent to code in limitations section, but requires just one annotation.
+
+If, by accident, singleton provider will be used with `@ScopeAnnotation`, error will be thrown.
+
 
 ### Additional annotations
 
@@ -289,6 +303,12 @@ bindListener(typeMatcher, new GeneralTypeListener<Destroyable>(
 ```
 
 `GeneralTypeListener` match bean by exact type, super type or interface (direct or super type interface).
+
+Example of [post processing beans extending abstract class](https://github.com/xvik/guice-ext-annotations/blob/master/src/test/java/ru/vyarus/guice/ext/postprocess/TypePostProcessorTest.java)
+
+Listener binding may seem to be more complicated than it could: typeMatcher could filter types instead of custom logic.
+This was done on purpose - to allow using mather for appliance scoping. For example, if only beans from exact packages
+should be processed, or any other conditions.
 
 ### Thanks to
 
