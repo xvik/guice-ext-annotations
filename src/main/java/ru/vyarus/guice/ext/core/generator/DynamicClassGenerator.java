@@ -163,6 +163,7 @@ public final class DynamicClassGenerator {
         return paramAnns;
     }
 
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static void applyScopeAnnotation(final AnnotatedElement source, final ConstPool constPool,
                                              final AnnotationsAttribute annotations,
                                              final Class<? extends java.lang.annotation.Annotation> scope)
