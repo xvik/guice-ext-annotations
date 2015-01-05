@@ -9,16 +9,11 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtConstructor;
 import javassist.CtNewConstructor;
-import javassist.bytecode.AnnotationsAttribute;
-import javassist.bytecode.ConstPool;
-import javassist.bytecode.MethodInfo;
-import javassist.bytecode.ParameterAnnotationsAttribute;
+import javassist.bytecode.*;
 import javassist.bytecode.annotation.Annotation;
-import javassist.bytecode.annotation.MemberValue;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
@@ -53,18 +48,31 @@ public final class DynamicClassGenerator {
     }
 
     /**
+     * Shortcut for {@link #generate(Class, Class)} method to create default scoped classes.
+     *
+     * @param type interface or abstract class
+     * @param <T>  type
+     * @return implementation class for provided type (will not generate if class already exist)
+     */
+    public static <T> Class<T> generate(final Class<T> type) {
+        return generate(type, null);
+    }
+
+    /**
      * Generates dynamic class, which guice may use as implementation and generate proxy above it,
      * correctly applying aop features.
      * <p>New class will inherit type annotations and constructor with annotations
      * (if base class use constructor injection). Also constructor inherits all annotations, including
      * parameters annotations.</p>
      *
-     * @param type interface or abstract class
-     * @param <T>  type
+     * @param type  interface or abstract class
+     * @param scope scope annotation to apply on generated class (may be null for default prototype scope)
+     * @param <T>   type
      * @return implementation class for provided type (will not generate if class already exist)
      */
     @SuppressWarnings("unchecked")
-    public static <T> Class<T> generate(final Class<T> type) {
+    public static <T> Class<T> generate(final Class<T> type,
+                                        final Class<? extends java.lang.annotation.Annotation> scope) {
         Preconditions.checkNotNull(type, "Original type required");
         Preconditions.checkArgument(type.isInterface() || Modifier.isAbstract(type.getModifiers()),
                 "Type must be interface or abstract class, but provided type is not: %s", type.getName());
@@ -74,7 +82,7 @@ public final class DynamicClassGenerator {
             Class targetClass;
             if (pool.getOrNull(targetClassName) == null) {
                 // generating new class
-                final CtClass impl = generateClass(targetClassName, type);
+                final CtClass impl = generateClass(targetClassName, type, scope);
                 targetClass = impl.toClass(type.getClassLoader(), null);
             } else {
                 // class was already generated
@@ -86,7 +94,9 @@ public final class DynamicClassGenerator {
         }
     }
 
-    private static CtClass generateClass(final String targetClassName, final Class type) throws Exception {
+    private static CtClass generateClass(final String targetClassName, final Class type,
+                                         final Class<? extends java.lang.annotation.Annotation> scope)
+            throws Exception {
         final ClassPool pool = ClassPool.getDefault();
         final CtClass ctType = pool.get(type.getName());
         CtClass impl;
@@ -97,29 +107,37 @@ public final class DynamicClassGenerator {
             impl = pool.makeClass(targetClassName, ctType);
             copyConstructor(impl, type);
         }
-        impl.getClassFile().addAttribute(copyAnnotations(impl.getClassFile().getConstPool(), type));
+        final ConstPool constPool = impl.getClassFile().getConstPool();
+        final AnnotationsAttribute annotations = copyAnnotations(constPool, type);
+        impl.getClassFile().addAttribute(annotations);
+        applyScopeAnnotation(type, constPool, annotations, scope);
         return impl;
     }
 
     private static void copyConstructor(final CtClass impl, final Class type) throws Exception {
         final Constructor ctor = findDIConstructor(type);
         if (ctor != null) {
+            final CtClass[] parameters = JavassistUtils.convertTypes(ctor.getParameterTypes());
             final CtConstructor ctConstructor = CtNewConstructor.make(
-                    convertTypes(ctor.getParameterTypes()),
-                    convertTypes(ctor.getExceptionTypes()),
+                    parameters,
+                    JavassistUtils.convertTypes(ctor.getExceptionTypes()),
                     CtNewConstructor.PASS_PARAMS, null, null, impl);
             final ConstPool constPool = impl.getClassFile().getConstPool();
             final MethodInfo methodInfo = ctConstructor.getMethodInfo();
             methodInfo.addAttribute(copyAnnotations(constPool, ctor));
             methodInfo.addAttribute(copyConstructorParametersAnnotations(constPool, ctor));
+            final SignatureAttribute info = copyConstructorGenericsSignature(parameters, type, constPool);
+            if (info != null) {
+                methodInfo.addAttribute(info);
+            }
             impl.addConstructor(ctConstructor);
         }
     }
 
-    private static Constructor findDIConstructor(final Class type) {
+    private static Constructor findDIConstructor(final Class<?> type) {
         Constructor target = null;
         for (Constructor ctor : type.getConstructors()) {
-            if (ctor.isAnnotationPresent(Inject.class) || ctor.isAnnotationPresent(Inject.class)) {
+            if (ctor.isAnnotationPresent(Inject.class) || ctor.isAnnotationPresent(javax.inject.Inject.class)) {
                 target = ctor;
                 break;
             }
@@ -138,21 +156,28 @@ public final class DynamicClassGenerator {
             final java.lang.annotation.Annotation[] anns = ctor.getParameterAnnotations()[i];
             paramAnnotations[i] = new Annotation[anns.length];
             for (int j = 0; j < anns.length; j++) {
-                paramAnnotations[i][j] = copyAnnotation(paramAnns.getConstPool(), anns[j]);
+                paramAnnotations[i][j] = JavassistUtils.copyAnnotation(paramAnns.getConstPool(), anns[j]);
             }
         }
         paramAnns.setAnnotations(paramAnnotations);
         return paramAnns;
     }
 
-    private static CtClass[] convertTypes(final Class<?>... types) throws Exception {
-        final ClassPool pool = ClassPool.getDefault();
-        final CtClass[] resTypes = new CtClass[types.length];
-        for (int i = 0; i < resTypes.length; i++) {
-            final Class<?> type = types[i];
-            resTypes[i] = pool.get(type.getName());
+    private static void applyScopeAnnotation(final AnnotatedElement source, final ConstPool constPool,
+                                             final AnnotationsAttribute annotations,
+                                             final Class<? extends java.lang.annotation.Annotation> scope)
+            throws Exception {
+        if (scope != null) {
+            Preconditions.checkState(Annotations.isScopeAnnotation(scope),
+                    "Provided annotation %s is not scope annotation", scope.getSimpleName());
+            for (java.lang.annotation.Annotation ann : source.getAnnotations()) {
+                Preconditions.checkArgument(!(ann instanceof ScopeAnnotation),
+                        "Duplicate scope definition: scope is specified as %s and also defined "
+                                + "in @ScopeAnnotation.", scope.getSimpleName());
+            }
+            annotations.addAnnotation(new Annotation(constPool,
+                    ClassPool.getDefault().get(scope.getName())));
         }
-        return resTypes;
     }
 
     private static AnnotationsAttribute copyAnnotations(final ConstPool constPool,
@@ -182,26 +207,23 @@ public final class DynamicClassGenerator {
                 res = new Annotation(constPool,
                         ClassPool.getDefault().get(((ScopeAnnotation) ann).value().getName()));
             } else {
-                res = copyAnnotation(constPool, ann);
+                res = JavassistUtils.copyAnnotation(constPool, ann);
             }
         }
         return res;
     }
 
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    private static Annotation copyAnnotation(final ConstPool constPool,
-                                             final java.lang.annotation.Annotation ann) throws Exception {
-        final ClassPool pool = ClassPool.getDefault();
-        final Class<? extends java.lang.annotation.Annotation> annotationType = ann.annotationType();
-        final Annotation copy = new Annotation(annotationType.getName(), constPool);
-        final Method[] methods = annotationType.getDeclaredMethods();
-        for (final Method method : methods) {
-            final CtClass ctType = pool.get(method.getReturnType().getName());
-            final MemberValue memberValue = Annotation.createMemberValue(constPool, ctType);
-            final Object value = method.invoke(ann);
-            memberValue.accept(new AnnotationMemberValueVisitor(constPool, value));
-            copy.addMemberValue(method.getName(), memberValue);
+    private static SignatureAttribute copyConstructorGenericsSignature(
+            final CtClass[] params, final Class<?> type, final ConstPool constPool) throws Exception {
+        final CtClass source = ClassPool.getDefault().get(type.getName());
+        final CtConstructor ctConstructor = source.getConstructor(Descriptor.ofConstructor(params));
+        String signature = null;
+        for (Object attr : ctConstructor.getMethodInfo().getAttributes()) {
+            if (attr instanceof SignatureAttribute) {
+                signature = ((SignatureAttribute) attr).getSignature();
+                break;
+            }
         }
-        return copy;
+        return signature == null ? null : new SignatureAttribute(constPool, signature);
     }
 }

@@ -10,11 +10,13 @@ import ru.vyarus.guice.ext.generator.support.*;
 import ru.vyarus.guice.ext.generator.support.aop.CustomAop;
 import ru.vyarus.guice.ext.generator.support.aop.CustomAopInterceptor;
 import ru.vyarus.guice.ext.generator.support.bad.BadDeclarationBean;
+import ru.vyarus.guice.ext.generator.support.bad.BadSingletonDeclaration;
 import ru.vyarus.guice.ext.generator.support.bad.WrongUsageBean;
 import ru.vyarus.guice.ext.generator.support.composite.CompositeCase1;
 import ru.vyarus.guice.ext.generator.support.composite.CompositeCase2;
 import ru.vyarus.guice.ext.generator.support.ctor.Ann;
 import ru.vyarus.guice.ext.generator.support.ctor.CustomConstructorBean;
+import ru.vyarus.guice.ext.generator.support.ctor.GenerifiedConstructorBean;
 
 import javax.inject.Singleton;
 import java.lang.annotation.Annotation;
@@ -187,5 +189,35 @@ public class GeneratorTest {
         Annotation ann = ctor.getParameterAnnotations()[0][0];
         assertTrue(ann instanceof Ann);
         assertEquals("param", ((Ann) ann).value());
+    }
+
+    @Test
+    public void testGenerifiedConstructor() throws Exception {
+        // original type constructor copied and constructor injection correctly handled
+        Guice.createInjector(new AbstractModule() {
+            @Override
+            protected void configure() {
+                bindInterceptor(Matchers.any(), Matchers.annotatedWith(CustomAop.class), new CustomAopInterceptor());
+            }
+        }).getInstance(GenerifiedConstructorBean.class).hello();
+    }
+
+    @Test
+    public void testSingletonProvider() throws Exception {
+        Injector injector = Guice.createInjector(new AbstractModule() {
+            @Override
+            protected void configure() {
+                bindInterceptor(Matchers.any(), Matchers.annotatedWith(CustomAop.class), new CustomAopInterceptor());
+            }
+        });
+        GenerifiedConstructorBean bean1 = injector.getInstance(GenerifiedConstructorBean.class);
+        GenerifiedConstructorBean bean2 = injector.getInstance(GenerifiedConstructorBean.class);
+        Assert.assertTrue(bean1 == bean2);
+    }
+
+    @Test(expected = ProvisionException.class)
+    public void testDuplicateSingletonDeclaration() throws Exception {
+        Guice.createInjector().getInstance(BadSingletonDeclaration.class);
+
     }
 }

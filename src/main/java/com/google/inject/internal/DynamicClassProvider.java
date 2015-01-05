@@ -6,6 +6,7 @@ import com.google.inject.ProvisionException;
 import ru.vyarus.guice.ext.core.generator.DynamicClassGenerator;
 
 import javax.inject.Inject;
+import java.lang.annotation.Annotation;
 
 /**
  * Provider allows using interfaces or abstract classes as normal guice beans.
@@ -36,7 +37,7 @@ public class DynamicClassProvider implements Provider<Object> {
                 @Override
                 public Object call(final InternalContext context) {
                     final Class<?> abstractType = context.getDependency().getKey().getTypeLiteral().getRawType();
-                    final Class<?> generatedType = DynamicClassGenerator.generate(abstractType);
+                    final Class<?> generatedType = DynamicClassGenerator.generate(abstractType, getScopeAnnotation());
                     return injector.getInstance(generatedType);
                 }
             });
@@ -45,4 +46,13 @@ public class DynamicClassProvider implements Provider<Object> {
         }
     }
 
+    /**
+     * Override it to specify different annotation. By default, no annotation specified which will implicitly lead
+     * to default prototype scope.
+     *
+     * @return scope annotation which should be applied to generated class
+     */
+    protected Class<? extends Annotation> getScopeAnnotation() {
+        return null;
+    }
 }

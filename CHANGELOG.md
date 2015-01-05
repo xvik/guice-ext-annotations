@@ -1,3 +1,8 @@
+* Fix recognition of javax.inject.Inject annotation during class generation
+* Generated class now contains valid generics signature (required for Provided parameters)
+* Add DynamicSingletonProvider: shortcut for DynamicClassProvider to produce singleton bean (without need for additional annotation)
+* Fix type post processor abstract class recognition
+
 ### 1.1.0 (2014-12-14)
 
 * Update guice 3.0 -> 4.0-beta5

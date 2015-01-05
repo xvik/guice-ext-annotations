@@ -6,6 +6,7 @@ import com.google.inject.internal.DynamicClassProvider;
 import javax.inject.Singleton;
 
 /**
+ * Scope annotation can't be used directly on abstract type (guice doesn't allow it)
  * @author Vyacheslav Rusakov
  * @since 10.12.2014
  */

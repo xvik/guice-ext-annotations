@@ -30,7 +30,7 @@ public class GeneralTypeListener<T> implements TypeListener {
         if (!Utils.isPackageValid(actualType)) {
             return;
         }
-        if (checkType(actualType)) {
+        if (typeClass.isAssignableFrom(actualType)) {
             encounter.register(new InjectionListener<I>() {
                 @Override
                 public void afterInjection(final I injectee) {
@@ -44,27 +44,5 @@ public class GeneralTypeListener<T> implements TypeListener {
                 }
             });
         }
-    }
-
-    /**
-     * @param check class to check
-     * @return true if type is assignable from required type or implements interface
-     * (directly or on any hierarchy level), false otherwise
-     */
-    private boolean checkType(final Class<?> check) {
-        boolean res = check.isAssignableFrom(typeClass);
-        if (!res && typeClass.isInterface()) {
-            Class<?> investigating = check;
-            while (!res && investigating != null && !investigating.equals(Object.class)) {
-                for (Class<?> test : investigating.getInterfaces()) {
-                    if (test.equals(typeClass)) {
-                        res = true;
-                        break;
-                    }
-                }
-                investigating = investigating.getSuperclass();
-            }
-        }
-        return res;
     }
 }
