@@ -1,0 +1,14 @@
+repositories {
+    jcenter()
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compile 'com.google.inject:guice:4.0-beta5'
+    compile 'org.slf4j:slf4j-api:1.7.10'
+    optional 'org.javassist:javassist:3.16.1-GA'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.slf4j:slf4j-nop:1.7.10'
+}

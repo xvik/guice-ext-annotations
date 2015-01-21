@@ -1,0 +1,20 @@
+{
+  "generator-lib-java": {
+    "githubUser": "xvik",
+    "authorName": "Vyacheslav Rusakov",
+    "authorEmail": "vyarus@gmail.com",
+    "libName": "guice-ext-annotations",
+    "libGroup": "ru.vyarus",
+    "libPackage": "ru.vyarus.guice.ext",
+    "libVersion": "0.1.0",
+    "libDesc": "Guice annotations extensions",
+    "targetJava": "1.6",
+    "libTags": "guice, slf4j, jsr250",
+    "bintrayUser": "vyarus",
+    "bintrayRepo": "xvik",
+    "bintraySignFiles": true,
+    "mavenCentralSync": true,
+    "enableQualityChecks": true,
+    "usedGeneratorVersion": "1.0.0"
+  }
+}
