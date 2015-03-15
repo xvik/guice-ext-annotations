@@ -45,7 +45,7 @@ compile 'ru.vyarus:guice-ext-annotations:1.1.1'
 
 ### Abstract types support
 
-Feature was developed to support finders in [guice-persist-orient](https://github.com/xvik/guice-persist-orient#dynamic-finders-1)
+Feature was developed to support repositories in [guice-persist-orient](https://github.com/xvik/guice-persist-orient#defining-repository)
 (look usage examples).
 
 #### Problem
@@ -53,7 +53,7 @@ Feature was developed to support finders in [guice-persist-orient](https://githu
 Suppose you have annotation to simplify sql query definition:
 
 ```java
-@Finder(query = "select from Model")
+@Query("select from Model")
 List<Model> list() {
     throw new UnsupportedOperationException();
 }
