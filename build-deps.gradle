@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.google.inject:guice:4.0-beta5'
+    compile 'com.google.inject:guice:4.0'
     compile 'org.slf4j:slf4j-api:1.7.10'
     optional 'org.javassist:javassist:3.16.1-GA'
 
