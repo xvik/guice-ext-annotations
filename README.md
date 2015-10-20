@@ -25,7 +25,7 @@ Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter)
 and then to maven central (require few days after release to be published). 
 
 [![Download](https://api.bintray.com/packages/vyarus/xvik/guice-ext-annotations/images/download.svg) ](https://bintray.com/vyarus/xvik/guice-ext-annotations/_latestVersion)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/ru.vyarus/guice-ext-annotations/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/ru.vyarus/guice-ext-annotations)
+[![Maven Central](https://img.shields.io/maven-central/v/ru.vyarus/guice-ext-annotations.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/ru.vyarus/guice-ext-annotations)
 
 Maven:
 
