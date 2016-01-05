@@ -20,7 +20,6 @@ public final class Utils {
      * @param type class type to check
      * @return true if package could be resolved, false otherwise
      */
-    @SuppressWarnings("PMD.BooleanInversion")
     public static boolean isPackageValid(final Class type) {
         boolean res = false;
         if (type != null) {

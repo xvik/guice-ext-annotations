@@ -24,7 +24,7 @@ import javax.annotation.PreDestroy;
  * @author Vyacheslav Rusakov
  * @since 29.06.2014
  */
-@SuppressWarnings("checkstyle:classdataabstractioncoupling")
+@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 public class ExtAnnotationsModule extends AbstractModule {
 
     private Matcher<Object> typeMatcher;
