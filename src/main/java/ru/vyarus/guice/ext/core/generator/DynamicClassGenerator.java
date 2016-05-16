@@ -55,7 +55,7 @@ public final class DynamicClassGenerator {
      * @return implementation class for provided type (will not generate if class already exist)
      */
     public static <T> Class<T> generate(final Class<T> type) {
-        return generate(type, null);
+        return generate(type, null, Thread.currentThread().getContextClassLoader());
     }
 
     /**
@@ -72,7 +72,8 @@ public final class DynamicClassGenerator {
      */
     @SuppressWarnings("unchecked")
     public static <T> Class<T> generate(final Class<T> type,
-                                        final Class<? extends java.lang.annotation.Annotation> scope) {
+                                        final Class<? extends java.lang.annotation.Annotation> scope,
+                                        final ClassLoader classLoader) {
         Preconditions.checkNotNull(type, "Original type required");
         Preconditions.checkArgument(type.isInterface() || Modifier.isAbstract(type.getModifiers()),
                 "Type must be interface or abstract class, but provided type is not: %s", type.getName());
@@ -86,7 +87,7 @@ public final class DynamicClassGenerator {
                 targetClass = impl.toClass(type.getClassLoader(), null);
             } else {
                 // class was already generated
-                targetClass = Class.forName(targetClassName);
+                targetClass = classLoader.loadClass(targetClassName);
             }
             return (Class<T>) targetClass;
         } catch (Exception ex) {

@@ -3,6 +3,7 @@ package com.google.inject.internal;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.google.inject.ProvisionException;
+import ru.vyarus.guice.ext.core.generator.GeneratorClassLoader;
 import ru.vyarus.guice.ext.core.generator.DynamicClassGenerator;
 
 import javax.inject.Inject;
@@ -37,7 +38,9 @@ public class DynamicClassProvider implements Provider<Object> {
                 @Override
                 public Object call(final InternalContext context) {
                     final Class<?> abstractType = context.getDependency().getKey().getTypeLiteral().getRawType();
-                    final Class<?> generatedType = DynamicClassGenerator.generate(abstractType, getScopeAnnotation());
+                    final Class<?> generatedType = DynamicClassGenerator.generate(abstractType,
+                            getScopeAnnotation(),
+                            injector.getInstance(GeneratorClassLoader.class).getLoader());
                     return injector.getInstance(generatedType);
                 }
             });
