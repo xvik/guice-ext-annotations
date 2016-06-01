@@ -1,3 +1,7 @@
+* Fix class generation for dynamic class loaders cases (required, for example, for playframework dev mode):
+    - dynamic classes are checked now against class loader of original type
+    - different classes will be generated for the same type from different class loaders
+
 ### 1.1.1 (2015-01-06)
 * Fix recognition of javax.inject.Inject annotation during class generation
 * Generated class now contains valid generics signature (required for Provided parameters)

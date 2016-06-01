@@ -39,10 +39,12 @@ public class AnnotationMemberValueVisitor implements MemberValueVisitor {
             .put(Double.class, CtClass.doubleType)
             .build();
 
+    private final ClassPool classPool;
     private final ConstPool constPool;
     private final Object value;
 
-    public AnnotationMemberValueVisitor(final ConstPool constPool, final Object value) {
+    public AnnotationMemberValueVisitor(final ClassPool classPool, final ConstPool constPool, final Object value) {
+        this.classPool = classPool;
         this.constPool = constPool;
         this.value = value;
     }
@@ -125,8 +127,8 @@ public class AnnotationMemberValueVisitor implements MemberValueVisitor {
 
     private MemberValue createValue(final Object value) throws Exception {
         final MemberValue memberValue = Annotation.createMemberValue(
-                this.constPool, getCtClass(getClass(value)));
-        memberValue.accept(new AnnotationMemberValueVisitor(this.constPool, value));
+                this.constPool, getCtClass(classPool, getClass(value)));
+        memberValue.accept(new AnnotationMemberValueVisitor(this.classPool, this.constPool, value));
         return memberValue;
     }
 
@@ -135,9 +137,9 @@ public class AnnotationMemberValueVisitor implements MemberValueVisitor {
         return isAnnotation ? ((java.lang.annotation.Annotation) object).annotationType() : object.getClass();
     }
 
-    private static CtClass getCtClass(final Class<?> type) throws Exception {
+    private static CtClass getCtClass(final ClassPool pool, final Class<?> type) throws Exception {
         return PRIMITIVES.containsKey(type)
                 ? PRIMITIVES.get(type)
-                : ClassPool.getDefault().get(type.getName());
+                : pool.get(type.getName());
     }
 }
