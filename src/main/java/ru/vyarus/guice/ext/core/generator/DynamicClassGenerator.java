@@ -48,6 +48,8 @@ public final class DynamicClassGenerator {
 
     /**
      * Shortcut for {@link #generate(Class, Class)} method to create default scoped classes.
+     * <p/>
+     * Method is thread safe.
      *
      * @param type interface or abstract class
      * @param <T>  type
@@ -60,9 +62,12 @@ public final class DynamicClassGenerator {
     /**
      * Generates dynamic class, which guice may use as implementation and generate proxy above it,
      * correctly applying aop features.
-     * <p>New class will inherit type annotations and constructor with annotations
+     * <p/>
+     * New class will inherit type annotations and constructor with annotations
      * (if base class use constructor injection). Also constructor inherits all annotations, including
-     * parameters annotations.</p>
+     * parameters annotations.
+     * <p/>
+     * Method is thread safe.
      *
      * @param type  interface or abstract class
      * @param scope scope annotation to apply on generated class (may be null for default prototype scope)
@@ -71,7 +76,7 @@ public final class DynamicClassGenerator {
      */
     @SuppressWarnings("unchecked")
     public static <T> Class<T> generate(final Class<T> type,
-                                        final Class<? extends java.lang.annotation.Annotation> scope) {
+                                                     final Class<? extends java.lang.annotation.Annotation> scope) {
         Preconditions.checkNotNull(type, "Original type required");
         Preconditions.checkArgument(type.isInterface() || Modifier.isAbstract(type.getModifiers()),
                 "Type must be interface or abstract class, but provided type is not: %s", type.getName());
@@ -79,20 +84,27 @@ public final class DynamicClassGenerator {
         final String targetClassName = type.getName() + DYNAMIC_CLASS_POSTFIX;
         final ClassLoader classLoader = type.getClassLoader();
 
-        Class<?> targetClass;
-        try {
-            // will work if class was already generated
-            targetClass = classLoader.loadClass(targetClassName);
-        } catch (ClassNotFoundException ex) {
-            targetClass = generateClass(type, targetClassName, classLoader, scope);
+        /**
+         * Synchronization is required to avoid double generation and consequent problems.
+         * Very unlikely that this method would be called too often and synchronization become bottleneck.
+         * Using original class as monitor to allow concurrent generation for different classes.
+         */
+        synchronized (type) {
+            Class<?> targetClass;
+            try {
+                // will work if class was already generated
+                targetClass = classLoader.loadClass(targetClassName);
+            } catch (ClassNotFoundException ex) {
+                targetClass = generateClass(type, targetClassName, classLoader, scope);
+            }
+            return (Class<T>) targetClass;
         }
-        return (Class<T>) targetClass;
     }
 
     @SuppressWarnings("unchecked")
     private static Class<?> generateClass(final Class<?> type, final String targetClassName,
-                                              final ClassLoader classLoader,
-                                              final Class<? extends java.lang.annotation.Annotation> scope) {
+                                          final ClassLoader classLoader,
+                                          final Class<? extends java.lang.annotation.Annotation> scope) {
         try {
             // have to use custom pool because original type classloader could be thrown away
             // and all cached CtClass objects would be stale
@@ -100,7 +112,7 @@ public final class DynamicClassGenerator {
             classPool.appendClassPath(new LoaderClassPath(classLoader));
 
             final CtClass impl = generateCtClass(classPool, targetClassName, type, scope);
-            return  impl.toClass(classLoader, null);
+            return impl.toClass(classLoader, null);
         } catch (Exception ex) {
             throw new DynamicClassException("Failed to generate class for " + type.getName(), ex);
         }
