@@ -48,6 +48,7 @@ public class ConcurrentGenerationTest {
             executed.add(
                     executor.submit(new Runnable() {
                         @Override
+                        @SuppressWarnings("unchecked")
                         public void run() {
                             DynamicClassGenerator.generate(types[(int)(types.length*Math.random())]);
                         }
