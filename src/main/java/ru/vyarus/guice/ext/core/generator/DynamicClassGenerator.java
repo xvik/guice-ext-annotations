@@ -48,7 +48,7 @@ public final class DynamicClassGenerator {
 
     /**
      * Shortcut for {@link #generate(Class, Class)} method to create default scoped classes.
-     * <p/>
+     * <p>
      * Method is thread safe.
      *
      * @param type interface or abstract class
@@ -62,11 +62,11 @@ public final class DynamicClassGenerator {
     /**
      * Generates dynamic class, which guice may use as implementation and generate proxy above it,
      * correctly applying aop features.
-     * <p/>
+     * <p>
      * New class will inherit type annotations and constructor with annotations
      * (if base class use constructor injection). Also constructor inherits all annotations, including
      * parameters annotations.
-     * <p/>
+     * <p>
      * Method is thread safe.
      *
      * @param type  interface or abstract class
@@ -84,7 +84,7 @@ public final class DynamicClassGenerator {
         final String targetClassName = type.getName() + DYNAMIC_CLASS_POSTFIX;
         final ClassLoader classLoader = type.getClassLoader();
 
-        /**
+        /*
          * Synchronization is required to avoid double generation and consequent problems.
          * Very unlikely that this method would be called too often and synchronization become bottleneck.
          * Using original class as monitor to allow concurrent generation for different classes.
