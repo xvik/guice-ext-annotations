@@ -60,6 +60,7 @@ import javax.inject.Singleton;
  *     // note that abstract bean was not bound and resolved with JIT
  *     injector.getInstance(Key.get(MyAbstractBean.class, Names.named("myBean")))
  * </code></pre>
+ *
  * @author Vyacheslav Rusakov
  * @since 21.09.2016
  */
