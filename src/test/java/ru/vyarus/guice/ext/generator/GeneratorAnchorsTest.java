@@ -8,10 +8,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.vyarus.guice.ext.core.generator.anchor.GeneratorAnchorModule;
-import ru.vyarus.guice.ext.generator.support.anchor.CtorAbstractClass;
-import ru.vyarus.guice.ext.generator.support.anchor.DynamicService;
-import ru.vyarus.guice.ext.generator.support.anchor.PureAbstractClass;
-import ru.vyarus.guice.ext.generator.support.anchor.TestIface;
+import ru.vyarus.guice.ext.generator.support.anchor.*;
 import ru.vyarus.guice.ext.generator.support.aop.CustomAop;
 
 import javax.inject.Inject;
@@ -39,6 +36,7 @@ public class GeneratorAnchorsTest {
         injector.getInstance(PureAbstractClass.class).hello();
         // important: RootService not registered and so will be created by JIT in root injector
         injector.getInstance(CtorAbstractClass.class).hello();
+        injector.getInstance(GenericsCtorAbstractClass.class).hello();
     }
 
     @Test

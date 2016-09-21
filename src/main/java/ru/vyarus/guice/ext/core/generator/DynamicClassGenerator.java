@@ -187,7 +187,7 @@ public final class DynamicClassGenerator {
         final MethodInfo methodInfo = ctConstructor.getMethodInfo();
         methodInfo.addAttribute(copyAnnotations(classPool, constPool, ctor));
         methodInfo.addAttribute(copyConstructorParametersAnnotations(classPool, constPool, ctor, anchor != null));
-        final SignatureAttribute info = copyConstructorGenericsSignature(constPool, parameters, ctType);
+        final SignatureAttribute info = copyConstructorGenericsSignature(constPool, parameters, ctType, anchor);
         if (info != null) {
             methodInfo.addAttribute(info);
         }
@@ -296,7 +296,8 @@ public final class DynamicClassGenerator {
     }
 
     private static SignatureAttribute copyConstructorGenericsSignature(
-            final ConstPool constPool, final CtClass[] params, final CtClass source) throws Exception {
+            final ConstPool constPool, final CtClass[] params, final CtClass source, final CtClass anchor)
+            throws Exception {
         final CtConstructor ctConstructor = source.getConstructor(Descriptor.ofConstructor(params));
         String signature = null;
         for (Object attr : ctConstructor.getMethodInfo().getAttributes()) {
@@ -304,6 +305,12 @@ public final class DynamicClassGenerator {
                 signature = ((SignatureAttribute) attr).getSignature();
                 break;
             }
+        }
+        if (signature != null && anchor != null) {
+            // add anchor to generics signature
+            final String type = "L" + (anchor.getName().replaceAll("\\.", "/")) + ";";
+            final int idx = signature.lastIndexOf(')');
+            signature = signature.substring(0, idx) + type + signature.substring(idx);
         }
         return signature == null ? null : new SignatureAttribute(constPool, signature);
     }
