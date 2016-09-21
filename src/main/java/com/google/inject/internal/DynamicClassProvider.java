@@ -1,9 +1,11 @@
 package com.google.inject.internal;
 
 import com.google.inject.Injector;
+import com.google.inject.Key;
 import com.google.inject.Provider;
 import com.google.inject.ProvisionException;
 import ru.vyarus.guice.ext.core.generator.DynamicClassGenerator;
+import ru.vyarus.guice.ext.core.generator.anchor.AnchorBean;
 
 import javax.inject.Inject;
 import java.lang.annotation.Annotation;
@@ -14,6 +16,8 @@ import java.lang.annotation.Annotation;
  * and use it as usual guice bean.
  * <p>Original bean will be correctly handled by guice aop: provider will generate new class, which guice could
  * use for proxy generation.</p>
+ * <p>If used with injectors hierarchy or within private modules, use together with
+ * {@link ru.vyarus.guice.ext.core.generator.anchor.GeneratorAnchorModule} to properly scope dynamic bindings.</p>
  * <p>Providers use guice package to use internal guice api (to resolve actual required type)</p>
  *
  * @author Vyacheslav Rusakov
@@ -30,14 +34,17 @@ public class DynamicClassProvider implements Provider<Object> {
     }
 
     @Override
-    @SuppressWarnings("PMD.PreserveStackTrace")
+    @SuppressWarnings({"PMD.PreserveStackTrace", "PMD.NullAssignment"})
     public Object get() {
         try {
             return ((InjectorImpl) injector).callInContext(new ContextualCallable<Object>() {
                 @Override
                 public Object call(final InternalContext context) {
+                    // check if (possibly) child context contains anchor bean definition
+                    final boolean hasAnchor = injector.getExistingBinding(Key.get(AnchorBean.class)) != null;
                     final Class<?> abstractType = context.getDependency().getKey().getTypeLiteral().getRawType();
-                    final Class<?> generatedType = DynamicClassGenerator.generate(abstractType, getScopeAnnotation());
+                    final Class<?> generatedType = DynamicClassGenerator.generate(abstractType, getScopeAnnotation(),
+                            hasAnchor ? AnchorBean.class : null);
                     return injector.getInstance(generatedType);
                 }
             });

@@ -12,6 +12,9 @@ import java.lang.annotation.Annotation;
  * The main intention is to reduce code size from common case from
  * {@code  @ScopeAnnotation(Singleton.class) @ProvidedBy(DynamicClassProvider.class)}
  * to simply {@code @ProvidedBy(DynamicSingletonProvider.class)}.
+ * <p>
+ * If used with injectors hierarchy or within private modules, use together with
+ * {@link ru.vyarus.guice.ext.core.generator.anchor.GeneratorAnchorModule} to properly scope dynamic bindings.
  *
  * @author Vyacheslav Rusakov
  * @see com.google.inject.internal.DynamicClassProvider for more docs

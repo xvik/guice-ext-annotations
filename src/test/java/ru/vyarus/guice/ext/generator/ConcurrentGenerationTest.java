@@ -9,7 +9,6 @@ import ru.vyarus.guice.ext.generator.support.InterfaceBean;
 import ru.vyarus.guice.ext.generator.support.ProvidedInterfaceBean;
 import ru.vyarus.guice.ext.generator.support.ctor.CustomConstructorBean;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;

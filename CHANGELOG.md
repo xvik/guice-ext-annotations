@@ -3,6 +3,7 @@
     - different classes will be generated for the same type from different class loaders
 * Make class generator thread safe (fixes concurrent provider calls issue) 
 * Update to guice 4.1
+* Add ability to use dynamic providers in child injector or inside private module: GeneratorAnchorModule (bubble up fix)
 
 ### 1.1.1 (2015-01-06)
 * Fix recognition of javax.inject.Inject annotation during class generation
