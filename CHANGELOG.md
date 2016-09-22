@@ -1,3 +1,4 @@
+### 1.2.1 (2016-09-23)
 * Fix DynamicClassProvider and DynamicSingletonProvider providers to be singletons.
 
 ### 1.2.0 (2016-09-23)

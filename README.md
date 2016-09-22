@@ -37,14 +37,14 @@ Maven:
 <dependency>
   <groupId>ru.vyarus</groupId>
   <artifactId>guice-ext-annotations</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
 </dependency>
 ```
 
 Gradle:
 
 ```groovy
-compile 'ru.vyarus:guice-ext-annotations:1.2.0'
+compile 'ru.vyarus:guice-ext-annotations:1.2.1'
 ```
 
 ### Abstract types support
