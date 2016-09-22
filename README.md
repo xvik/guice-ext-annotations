@@ -19,6 +19,10 @@ Features:
   * Add custom method annotation support
   * Add post processing for beans of some type (e.g. implementing interface or extending some abstract class)
 
+### Thanks to
+
+* [Derric Gilling](https://github.com/dgilling) for help with playframework related issues
+
 ### Setup
 
 Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter) (package appear immediately after release) 
@@ -33,14 +37,14 @@ Maven:
 <dependency>
   <groupId>ru.vyarus</groupId>
   <artifactId>guice-ext-annotations</artifactId>
-  <version>1.1.1</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
 Gradle:
 
 ```groovy
-compile 'ru.vyarus:guice-ext-annotations:1.1.1'
+compile 'ru.vyarus:guice-ext-annotations:1.2.0'
 ```
 
 ### Abstract types support
@@ -73,7 +77,7 @@ implementation class from abstract class or interface, and let guice instantiate
 Additional actions during class generation:
 * Annotations copied from abstract type (class or interface) to allow aop correctly resolve them
 * If abstract bean use constructor injection, the same constructor will be created in implementation (including all
-constructor and parameters annotations).
+constructor and parameters annotations and generic signatures).
 
 All this allows thinking of abstract type as of usual guice bean.
 
@@ -115,6 +119,19 @@ After all, bean could be injected as usual:
 
 Don't forget that all abstract methods must be handled with aop: otherwise you will get abstract method call exception.
 
+#### Class loaders
+
+May be used within complex classloader hierarchies (like playframework dev mode). 
+
+Class loader of abstract type is used to generate implementation class. Generated class is first checked fo existence in this 
+class loader and, if not found, generated and attached to that class loader. For example, if the same class will be loaded by different
+class loaders, then generator will generate different implementations.
+In play dev mode this will mean that after hot reload (classloader with your abstract class replace) generator will 
+generate new implementation for new (updated) abstract class.
+
+Class generation is thread safe: synchronized on abstract type to allow concurrent generation for different classes and prevent
+duplicate generations.
+
 #### Limitation
 
 There is only one limitation: you can't use scope annotations directly on abstract types - guice doesn't allow it.
@@ -141,6 +158,71 @@ This is completely equivalent to code in limitations section, but requires just 
 
 If, by accident, singleton provider will be used with `@ScopeAnnotation`, error will be thrown.
 
+#### Child injectors and private modules
+
+When JIT (dynamic) resolution is used (bindings not described in module) then, during dynamic binding creation,
+guice will try to create binding in upper most injector (in order to re-use instance in possibly other
+child injectors (java class loaders works the same way by the same reason)).
+
+For example, suppose there is some root injector and your module with aop (used to handle annotations on abstract classes)
+is declared in child injector.
+
+```java
+Guice.createInjector().createChildInjector(new MyAopModule());
+```
+
+Some abstract type without explicit binding:
+
+```java
+@ProvidedBy(DynamicClassProvider.class)
+public interface MyAbstractBean {}
+```
+
+If some service depends on this abstract type (injects it), then JIT binding for MyAbstractBean will be created
+in root(!) module. But aop to handle your custom annotations is declared in child module and so you will get
+abstract method call exception when try to call any method of abstract bean.
+
+For example, such case could appear with test-ng guice integration, which always start your modules as child injector.
+
+In general, there are two ways to workaround such situation:
+* Manually declare all required bindings in child module
+* Abstract type must depend on some other bean in child injector (this will force JIT binding to be created in child module (prevent bubbling up))
+
+##### Solution 
+
+Out of the box, special module is available to solve this problem: `GeneratorAnchorModule`.
+
+If it will be used in example above, then JIT bindings for abstract types will be created in child injector automatically (fixing behaviour):
+
+```java
+Guice.createInjector().createChildInjector(new MyAopModule(), new GeneratorAnchorModule());
+```
+
+Module use "anchor" technic: dummy bean (AnchorBean) is registered in child injector and all dynamically generated classes
+(when `@ProvidedBy` used) become dependent of this dummy bean (AnchorBean added to generated implementation class constructor). 
+
+Also, module will allow using dynamic bindings inside private module:
+
+```java
+    public class MyPrivateModule extends PrivateModule {
+        protected void configure() {
+            install(new MyAopModule());
+            install(new GeneratorAnchorModule());
+        }
+
+        @Provides 
+        @Exposed 
+        @Named("myBean")
+        MyAbstractBean provide(MyAbstractBean bean) {
+            return bean;
+        }
+    }
+
+     Injector injector = Injector.createModule(new MyPrivateModule());
+     injector.getInstance(Key.get(MyAbstractBean.class, Names.named("myBean")))
+```
+
+Note that MyAbstractBean is not bound explicitly, but still correct instance exposed from private module.
 
 ### Additional annotations
 
