@@ -20,6 +20,7 @@ import java.lang.annotation.Annotation;
  * @see com.google.inject.internal.DynamicClassProvider for more docs
  * @since 05.01.2015
  */
+@Singleton
 public class DynamicSingletonProvider extends DynamicClassProvider {
 
     @Inject

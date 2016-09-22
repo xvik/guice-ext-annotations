@@ -1,3 +1,5 @@
+* Fix DynamicClassProvider and DynamicSingletonProvider providers to be singletons.
+
 ### 1.2.0 (2016-09-23)
 * Fix class generation for dynamic class loaders cases (required, for example, for playframework dev mode):
     - dynamic classes are checked now against class loader of original type

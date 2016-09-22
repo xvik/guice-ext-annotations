@@ -8,6 +8,7 @@ import ru.vyarus.guice.ext.core.generator.DynamicClassGenerator;
 import ru.vyarus.guice.ext.core.generator.anchor.AnchorBean;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.lang.annotation.Annotation;
 
 /**
@@ -24,6 +25,7 @@ import java.lang.annotation.Annotation;
  * @see ru.vyarus.guice.ext.core.generator.DynamicClassGenerator if you prefer direct registration in module
  * @since 07.12.2014
  */
+@Singleton
 public class DynamicClassProvider implements Provider<Object> {
 
     private final Injector injector;
