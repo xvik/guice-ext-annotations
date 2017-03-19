@@ -1,4 +1,4 @@
-#Guice annotations extensions
+# Guice annotations extensions
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xvik/guice-ext-annotations)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
 [![Build Status](http://img.shields.io/travis/xvik/guice-ext-annotations.svg?style=flat&branch=master)](https://travis-ci.org/xvik/guice-ext-annotations)
