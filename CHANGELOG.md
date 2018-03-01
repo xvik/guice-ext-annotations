@@ -1,3 +1,5 @@
+* Guice 4.2.0 compatibility 
+
 ### 1.2.1 (2016-09-23)
 * Fix DynamicClassProvider and DynamicSingletonProvider providers to be singletons.
 
