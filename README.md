@@ -39,14 +39,14 @@ Maven:
 <dependency>
   <groupId>ru.vyarus</groupId>
   <artifactId>guice-ext-annotations</artifactId>
-  <version>1.2.1</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 
 Gradle:
 
 ```groovy
-compile 'ru.vyarus:guice-ext-annotations:1.2.1'
+compile 'ru.vyarus:guice-ext-annotations:1.3.0'
 ```
 
 ### Abstract types support
@@ -393,10 +393,6 @@ Example of [post processing beans extending abstract class](https://github.com/x
 Listener binding may seem to be more complicated than it could: typeMatcher could filter types instead of custom logic.
 This was done on purpose - to allow using mather for appliance scoping. For example, if only beans from exact packages
 should be processed, or any other conditions.
-
-### Thanks to
-
-[99soft lifegycle](https://github.com/99soft/lifegycle) for inspiration.
 
 ---
 [![java lib generator](http://img.shields.io/badge/Powered%20by-%20Java%20lib%20generator-green.svg?style=flat-square)](https://github.com/xvik/generator-lib-java)
