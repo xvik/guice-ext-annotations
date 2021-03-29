@@ -16,7 +16,7 @@ import java.util.List;
 public class DestroyableManager implements Runnable {
     private final Logger logger = LoggerFactory.getLogger(DestroyableManager.class);
 
-    private final List<Destroyable> destroyListeners = new ArrayList<Destroyable>();
+    private final List<Destroyable> destroyListeners = new ArrayList<>();
 
     /**
      * Register destroyable instance to be called on context shutdown.

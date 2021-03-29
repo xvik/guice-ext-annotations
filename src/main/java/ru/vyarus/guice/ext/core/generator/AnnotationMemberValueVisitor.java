@@ -49,6 +49,7 @@ public class AnnotationMemberValueVisitor implements MemberValueVisitor {
         this.value = value;
     }
 
+    @Override
     public void visitAnnotationMemberValue(final AnnotationMemberValue mb) {
         final Class<?> annotationType = getClass(value);
         final Method[] methods = annotationType.getDeclaredMethods();
@@ -64,6 +65,7 @@ public class AnnotationMemberValueVisitor implements MemberValueVisitor {
         }
     }
 
+    @Override
     public void visitArrayMemberValue(final ArrayMemberValue mb) {
         final int length = Array.getLength(this.value);
         final MemberValue[] members = new MemberValue[length];
@@ -78,22 +80,27 @@ public class AnnotationMemberValueVisitor implements MemberValueVisitor {
         }
     }
 
+    @Override
     public void visitBooleanMemberValue(final BooleanMemberValue mb) {
         mb.setValue((Boolean) this.value);
     }
 
+    @Override
     public void visitByteMemberValue(final ByteMemberValue mb) {
         mb.setValue((Byte) this.value);
     }
 
+    @Override
     public void visitCharMemberValue(final CharMemberValue mb) {
         mb.setValue((Character) this.value);
     }
 
+    @Override
     public void visitDoubleMemberValue(final DoubleMemberValue mb) {
         mb.setValue((Double) this.value);
     }
 
+    @Override
     public void visitEnumMemberValue(final EnumMemberValue mb) {
         final Enum<?> enumeration = (Enum<?>) this.value;
         final Class type = enumeration.getDeclaringClass();
@@ -101,26 +108,32 @@ public class AnnotationMemberValueVisitor implements MemberValueVisitor {
         mb.setValue(enumeration.name());
     }
 
+    @Override
     public void visitFloatMemberValue(final FloatMemberValue mb) {
         mb.setValue((Float) this.value);
     }
 
+    @Override
     public void visitIntegerMemberValue(final IntegerMemberValue mb) {
         mb.setValue((Integer) this.value);
     }
 
+    @Override
     public void visitLongMemberValue(final LongMemberValue mb) {
         mb.setValue((Long) this.value);
     }
 
+    @Override
     public void visitShortMemberValue(final ShortMemberValue mb) {
         mb.setValue((Short) this.value);
     }
 
+    @Override
     public void visitStringMemberValue(final StringMemberValue mb) {
         mb.setValue((String) this.value);
     }
 
+    @Override
     public void visitClassMemberValue(final ClassMemberValue mb) {
         mb.setValue(((Class) this.value).getName());
     }

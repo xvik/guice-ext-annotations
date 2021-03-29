@@ -37,16 +37,13 @@ public class DynamicClassProvider implements Provider<Object> {
     @Override
     @SuppressWarnings({"PMD.PreserveStackTrace", "PMD.NullAssignment"})
     public Object get() {
-        final InternalContext context = ((InjectorImpl) injector).enterContext();
-        try {
+        try (InternalContext context = ((InjectorImpl) injector).enterContext()) {
             // check if (possibly) child context contains anchor bean definition
             final boolean hasAnchor = injector.getExistingBinding(Key.get(AnchorBean.class)) != null;
             final Class<?> abstractType = context.getDependency().getKey().getTypeLiteral().getRawType();
             final Class<?> generatedType = DynamicClassGenerator.generate(abstractType, getScopeAnnotation(),
                     hasAnchor ? AnchorBean.class : null);
             return injector.getInstance(generatedType);
-        } finally {
-            context.close();
         }
     }
 

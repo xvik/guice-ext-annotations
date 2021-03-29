@@ -1,3 +1,5 @@
+* Drop java 1.6 support
+
 ### 1.3.0 (2018-04-01)
 * Guice 4.2.0 compatibility 
 
