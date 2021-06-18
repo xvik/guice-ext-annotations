@@ -24,7 +24,7 @@ dependencies {
     optional 'org.javassist:javassist:3.28.0-GA'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.slf4j:slf4j-nop:1.7.30'
+    testImplementation 'org.slf4j:slf4j-nop:1.7.31'
 }
 
 group = 'ru.vyarus'
