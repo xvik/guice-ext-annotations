@@ -8,13 +8,10 @@
     "libPackage": "ru.vyarus.guice.ext",
     "libVersion": "0.1.0",
     "libDesc": "Guice annotations extensions",
-    "targetJava": "1.6",
-    "libTags": "guice, slf4j, jsr250",
-    "bintrayUser": "vyarus",
-    "bintrayRepo": "xvik",
-    "bintraySignFiles": true,
-    "mavenCentralSync": true,
     "enableQualityChecks": true,
-    "usedGeneratorVersion": "2.5.0"
+    "usedGeneratorVersion": "3.0.0",
+    "multiModule": false,
+    "modulePrefix": "-",
+    "moduleName": "-"
   }
 }
