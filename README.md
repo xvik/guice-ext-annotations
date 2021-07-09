@@ -1,6 +1,6 @@
 # Guice annotations extensions
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
-[![Build Status](http://img.shields.io/travis/xvik/guice-ext-annotations.svg?style=flat&branch=master)](https://travis-ci.org/xvik/guice-ext-annotations)
+[![Build Status](https://travis-ci.com/xvik/guice-ext-annotations.svg?branch=master)](https://travis-ci.com/xvik/guice-ext-annotations)
 [![Appveyor build status](https://ci.appveyor.com/api/projects/status/github/xvik/guice-ext-annotations?svg=true)](https://ci.appveyor.com/project/xvik/guice-ext-annotations)
 [![codecov](https://codecov.io/gh/xvik/guice-ext-annotations/branch/master/graph/badge.svg)](https://codecov.io/gh/xvik/guice-ext-annotations)
 
@@ -27,10 +27,6 @@ Features:
 
 ### Setup
 
-Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter) (package appear immediately after release) 
-and then to maven central (require few days after release to be published). 
-
-[![JCenter](https://api.bintray.com/packages/vyarus/xvik/guice-ext-annotations/images/download.svg)](https://bintray.com/vyarus/xvik/guice-ext-annotations/_latestVersion)
 [![Maven Central](https://img.shields.io/maven-central/v/ru.vyarus/guice-ext-annotations.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/ru.vyarus/guice-ext-annotations)
 
 Maven:
@@ -46,7 +42,7 @@ Maven:
 Gradle:
 
 ```groovy
-compile 'ru.vyarus:guice-ext-annotations:1.3.0'
+implementation 'ru.vyarus:guice-ext-annotations:1.3.0'
 ```
 
 ### Abstract types support
@@ -88,7 +84,7 @@ All this allows thinking of abstract type as of usual guice bean.
 In order to use dynamic proxies, add dependency on javassist library:
 
 ```groovy
-compile 'org.javassist:javassist:3.16.1-GA'
+implementation 'org.javassist:javassist:3.16.1-GA'
 ```
 
 NOTE: javassist used instead of cglib, because cglib can't manipulate annotations.
