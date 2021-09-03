@@ -1,6 +1,6 @@
 # Guice annotations extensions
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.com/xvik/guice-ext-annotations.svg?branch=master)](https://travis-ci.com/xvik/guice-ext-annotations)
+[![CI](https://github.com/xvik/guice-ext-annotations/actions/workflows/CI.yml/badge.svg)](https://github.com/xvik/guice-ext-annotations/actions/workflows/CI.yml)
 [![Appveyor build status](https://ci.appveyor.com/api/projects/status/github/xvik/guice-ext-annotations?svg=true)](https://ci.appveyor.com/project/xvik/guice-ext-annotations)
 [![codecov](https://codecov.io/gh/xvik/guice-ext-annotations/branch/master/graph/badge.svg)](https://codecov.io/gh/xvik/guice-ext-annotations)
 
