@@ -125,7 +125,6 @@ public final class DynamicClassGenerator {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private static Class<?> generateClass(final Class<?> type, final String targetClassName,
                                           final ClassLoader classLoader,
                                           final Class<? extends java.lang.annotation.Annotation> scope,
@@ -137,7 +136,7 @@ public final class DynamicClassGenerator {
             classPool.appendClassPath(new LoaderClassPath(classLoader));
 
             final CtClass impl = generateCtClass(classPool, targetClassName, type, scope, anchor);
-            return impl.toClass(classLoader, null);
+            return impl.toClass(type);
         } catch (Exception ex) {
             throw new DynamicClassException("Failed to generate class for " + type.getName(), ex);
         }
