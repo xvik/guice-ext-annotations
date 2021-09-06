@@ -35,14 +35,14 @@ Maven:
 <dependency>
   <groupId>ru.vyarus</groupId>
   <artifactId>guice-ext-annotations</artifactId>
-  <version>1.3.0</version>
+  <version>1.4.0</version>
 </dependency>
 ```
 
 Gradle:
 
 ```groovy
-implementation 'ru.vyarus:guice-ext-annotations:1.3.0'
+implementation 'ru.vyarus:guice-ext-annotations:1.4.0'
 ```
 
 ### Abstract types support
@@ -84,8 +84,10 @@ All this allows thinking of abstract type as of usual guice bean.
 In order to use dynamic proxies, add dependency on javassist library:
 
 ```groovy
-implementation 'org.javassist:javassist:3.16.1-GA'
+implementation 'org.javassist:javassist:3.28.0-GA'
 ```
+
+Minimal required version is 3.24.
 
 NOTE: javassist used instead of cglib, because cglib can't manipulate annotations.
 
