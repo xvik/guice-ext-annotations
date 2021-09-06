@@ -39,4 +39,14 @@ public final class Utils {
             throw new IllegalStateException("Method without parameters required");
         }
     }
+
+    /**
+     * Note: versions below 1.8 are not supported.
+     *
+     * @return true if current java is 1.8, otherwise assumed 9 or above
+     */
+    public static boolean isJava8() {
+        final String version = System.getProperty("java.version");
+        return version.startsWith("1.8");
+    }
 }

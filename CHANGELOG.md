@@ -1,4 +1,4 @@
-* Drop java 1.6 support
+* Drop java 1.6 and 1.7 support
 * Update to guice 5.0.1
 * Fix JDK 16 compatibility for class generator (min required javassist is 3.24)
 

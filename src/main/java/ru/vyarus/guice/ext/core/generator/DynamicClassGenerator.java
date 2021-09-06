@@ -8,6 +8,7 @@ import com.google.inject.internal.Annotations;
 import javassist.*;
 import javassist.bytecode.*;
 import javassist.bytecode.annotation.Annotation;
+import ru.vyarus.guice.ext.core.util.Utils;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
@@ -136,7 +137,8 @@ public final class DynamicClassGenerator {
             classPool.appendClassPath(new LoaderClassPath(classLoader));
 
             final CtClass impl = generateCtClass(classPool, targetClassName, type, scope, anchor);
-            return impl.toClass(type);
+            // incompatible javassist apis for java 8 and >=9
+            return Utils.isJava8() ? impl.toClass(classLoader, type.getProtectionDomain()) : impl.toClass(type);
         } catch (Exception ex) {
             throw new DynamicClassException("Failed to generate class for " + type.getName(), ex);
         }
