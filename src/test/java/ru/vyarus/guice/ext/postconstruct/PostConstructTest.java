@@ -3,15 +3,12 @@ package ru.vyarus.guice.ext.postconstruct;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import org.junit.Assert;
+import jakarta.annotation.PostConstruct;
 import org.junit.Before;
 import org.junit.Test;
 import ru.vyarus.guice.ext.ExtAnnotationsModule;
-import ru.vyarus.guice.ext.log.LogTest;
 
-import javax.annotation.PostConstruct;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Vyacheslav Rusakov

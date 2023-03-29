@@ -5,7 +5,7 @@ import ru.vyarus.guice.ext.core.util.Utils;
 import ru.vyarus.guice.ext.managed.destroyable.AnnotatedMethodDestroyable;
 import ru.vyarus.guice.ext.managed.destroyable.DestroyableManager;
 
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 import java.lang.reflect.Method;
 
 /**

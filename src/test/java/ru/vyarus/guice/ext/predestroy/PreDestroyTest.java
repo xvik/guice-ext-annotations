@@ -8,7 +8,7 @@ import org.junit.Test;
 import ru.vyarus.guice.ext.ExtAnnotationsModule;
 import ru.vyarus.guice.ext.managed.destroyable.DestroyableManager;
 
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 
 import static org.junit.Assert.assertEquals;
 

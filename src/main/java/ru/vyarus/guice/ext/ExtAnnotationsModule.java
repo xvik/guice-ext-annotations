@@ -15,8 +15,8 @@ import ru.vyarus.guice.ext.managed.PreDestroyAnnotationProcessor;
 import ru.vyarus.guice.ext.managed.destroyable.Destroyable;
 import ru.vyarus.guice.ext.managed.destroyable.DestroyableManager;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 
 /**
  * Additional annotations support module: @PostConstruct, @PreDestroy, @Log.
@@ -43,7 +43,7 @@ public class ExtAnnotationsModule extends AbstractModule {
      * @param pkg package to limit beans, where annotations processed
      */
     public ExtAnnotationsModule(final String pkg) {
-        this(new ObjectPackageMatcher<Object>(pkg));
+        this(new ObjectPackageMatcher<>(pkg));
     }
 
     /**
@@ -59,16 +59,16 @@ public class ExtAnnotationsModule extends AbstractModule {
     protected void configure() {
         final DestroyableManager manager = configureManager(new DestroyableManager());
 
-        bindListener(typeMatcher, new GeneralTypeListener<Destroyable>(
+        bindListener(typeMatcher, new GeneralTypeListener<>(
                 Destroyable.class, new DestroyableTypeProcessor(manager)));
 
-        bindListener(typeMatcher, new AnnotatedMethodTypeListener<PostConstruct>(
+        bindListener(typeMatcher, new AnnotatedMethodTypeListener<>(
                 PostConstruct.class, new PostConstructAnnotationProcessor()));
 
-        bindListener(typeMatcher, new AnnotatedMethodTypeListener<PreDestroy>(
+        bindListener(typeMatcher, new AnnotatedMethodTypeListener<>(
                 PreDestroy.class, new PreDestroyAnnotationProcessor(manager)));
 
-        bindListener(typeMatcher, new AnnotatedFieldTypeListener<Log>(
+        bindListener(typeMatcher, new AnnotatedFieldTypeListener<>(
                 Log.class, new Slf4jLogAnnotationProcessor()));
     }
 

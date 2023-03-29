@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.vyarus.guice.ext.ExtAnnotationsModule;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 /**
  * @author Vyacheslav Rusakov

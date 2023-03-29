@@ -3,7 +3,7 @@ package ru.vyarus.guice.ext.managed;
 import ru.vyarus.guice.ext.core.method.MethodPostProcessor;
 import ru.vyarus.guice.ext.core.util.Utils;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.lang.reflect.Method;
 
 /**
