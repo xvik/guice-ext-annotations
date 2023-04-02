@@ -35,15 +35,20 @@ Maven:
 <dependency>
   <groupId>ru.vyarus</groupId>
   <artifactId>guice-ext-annotations</artifactId>
-  <version>1.4.0</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
 Gradle:
 
 ```groovy
-implementation 'ru.vyarus:guice-ext-annotations:1.4.0'
+implementation 'ru.vyarus:guice-ext-annotations:2.0.0'
 ```
+
+**NOTE**: version 2.0 compatible with jakarta.annotation-api 2 (jakarta.annotation namespace for `@PostConstruct` 
+and `@PreDestroy` annotations), but guice still use `javax.inject` namespace.
+
+For `javax.annotation` use [version 1.4.1](https://github.com/xvik/guice-ext-annotations/tree/1.x) 
 
 ### Abstract types support
 

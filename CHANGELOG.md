@@ -1,6 +1,10 @@
-* Switch to jakarta annotations (jakarta.annotation instead javax.annotation)
+### 2.0.0 (2023-04-02)
+* Switch to jakarta.annotation-api 2 (jakarta. namespace)
 
 NOTE: guice still use javax.inject
+
+### 1.4.1 (2023-04-02)
+* Replace javax.annotation-api jar with jakarta.annotation-api 1 (preserving javax. namespace)
 
 ### 1.4.0 (2021-09-06)
 * Drop java 1.6 and 1.7 support
