@@ -68,7 +68,7 @@ tasks.withType(Sign) {onlyIf { !System.getenv('JITPACK') }}
 // Required signing properties for release: signing.keyId, signing.password and signing.secretKeyRingFile
 // (https://docs.gradle.org/current/userguide/signing_plugin.html#sec:signatory_credentials)
 
-release.git.requireBranch.set('master')
+release.git.requireBranch.set('1.x')
 
 afterReleaseBuild {
     dependsOn = ['publishToSonatype',
