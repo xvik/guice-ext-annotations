@@ -21,7 +21,7 @@ repositories { mavenLocal(); mavenCentral() }
 dependencies {
     implementation 'com.google.inject:guice:5.1.0'
     implementation 'org.slf4j:slf4j-api:1.7.36'
-    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+    implementation 'jakarta.annotation:jakarta.annotation-api:1.3.5'
     optional 'org.javassist:javassist:3.29.2-GA'
 
     testImplementation 'junit:junit:4.13.2'

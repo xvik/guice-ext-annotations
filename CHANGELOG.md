@@ -1,3 +1,5 @@
+* Replace javax.annotation jar with jakarta.annotation (preserving javax. namespace)
+
 ### 1.4.0 (2021-09-06)
 * Drop java 1.6 and 1.7 support
 * Update to guice 5.0.1
