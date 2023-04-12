@@ -35,14 +35,14 @@ Maven:
 <dependency>
   <groupId>ru.vyarus</groupId>
   <artifactId>guice-ext-annotations</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
 </dependency>
 ```
 
 Gradle:
 
 ```groovy
-implementation 'ru.vyarus:guice-ext-annotations:2.0.0'
+implementation 'ru.vyarus:guice-ext-annotations:2.0.1'
 ```
 
 **NOTE**: version 2.0 compatible with jakarta.annotation-api 2 (jakarta.annotation namespace for `@PostConstruct` 

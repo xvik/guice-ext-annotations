@@ -1,3 +1,4 @@
+### 2.0.1 (2023-04-13)
 * Avoid direct javax.inject annotations usage for jakarta.inject compatibility
   (guice native annotations used instead)
   - Dynamic class generation would support both annotations
