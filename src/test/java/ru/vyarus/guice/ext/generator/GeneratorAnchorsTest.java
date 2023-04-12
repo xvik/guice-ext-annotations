@@ -11,8 +11,8 @@ import ru.vyarus.guice.ext.core.generator.anchor.GeneratorAnchorModule;
 import ru.vyarus.guice.ext.generator.support.anchor.*;
 import ru.vyarus.guice.ext.generator.support.aop.CustomAop;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * @author Vyacheslav Rusakov

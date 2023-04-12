@@ -3,7 +3,7 @@ package ru.vyarus.guice.ext.generator.support.bad;
 import com.google.inject.ProvidedBy;
 import com.google.inject.internal.DynamicClassProvider;
 
-import javax.inject.Singleton;
+import com.google.inject.Singleton;
 
 /**
  * Scope annotation can't be used directly on abstract type (guice doesn't allow it)

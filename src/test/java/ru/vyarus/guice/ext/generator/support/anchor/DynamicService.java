@@ -1,6 +1,6 @@
 package ru.vyarus.guice.ext.generator.support.anchor;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 
 /**
  * @author Vyacheslav Rusakov

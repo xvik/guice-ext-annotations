@@ -4,8 +4,8 @@ import com.google.inject.ProvidedBy;
 import com.google.inject.internal.DynamicSingletonProvider;
 import ru.vyarus.guice.ext.generator.support.aop.CustomAop;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * @author Vyacheslav Rusakov

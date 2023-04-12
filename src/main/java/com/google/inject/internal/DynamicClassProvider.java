@@ -6,8 +6,8 @@ import com.google.inject.Provider;
 import ru.vyarus.guice.ext.core.generator.DynamicClassGenerator;
 import ru.vyarus.guice.ext.core.generator.anchor.AnchorBean;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import java.lang.annotation.Annotation;
 
 /**

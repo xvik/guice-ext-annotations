@@ -18,7 +18,7 @@ import ru.vyarus.guice.ext.generator.support.ctor.Ann;
 import ru.vyarus.guice.ext.generator.support.ctor.CustomConstructorBean;
 import ru.vyarus.guice.ext.generator.support.ctor.GenerifiedConstructorBean;
 
-import javax.inject.Singleton;
+import com.google.inject.Singleton;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.reflect.Constructor;

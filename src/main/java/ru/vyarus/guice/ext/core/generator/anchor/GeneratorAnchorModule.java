@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.internal.DynamicClassProvider;
 import com.google.inject.internal.DynamicSingletonProvider;
 
-import javax.inject.Singleton;
+import com.google.inject.Singleton;
 
 /**
  * Support module used to tie dynamic binding for generated class (generated with {@link DynamicClassProvider}) to

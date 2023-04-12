@@ -40,13 +40,15 @@ import java.lang.reflect.Modifier;
  * @see com.google.inject.internal.DynamicClassProvider
  * @since 10.12.2014
  */
-@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
+@SuppressWarnings({"checkstyle:ClassDataAbstractionCoupling", "checkstyle:GodClass", "PMD.GodClass"})
 public final class DynamicClassGenerator {
 
     /**
      * Postfix applied to interface or abstract class name to get generated class name.
      */
     public static final String DYNAMIC_CLASS_POSTFIX = "$GuiceDynamicClass";
+    public static final String JAVAX_INJECT = "javax.inject.Inject";
+    public static final String JAKARTA_INJECT = "jakarta.inject.Inject";
 
     private DynamicClassGenerator() {
     }
@@ -206,8 +208,7 @@ public final class DynamicClassGenerator {
         final MethodInfo methodInfo = ctConstructor.getMethodInfo();
         // add injection annotation
         final AnnotationsAttribute attr = new AnnotationsAttribute(constPool, AnnotationsAttribute.visibleTag);
-        final Annotation annotation = new Annotation(constPool,
-                classPool.get(javax.inject.Inject.class.getName()));
+        final Annotation annotation = new Annotation(constPool, classPool.get(Inject.class.getName()));
         attr.addAnnotation(annotation);
         methodInfo.addAttribute(attr);
         impl.addConstructor(ctConstructor);
@@ -216,9 +217,17 @@ public final class DynamicClassGenerator {
     private static Constructor findDIConstructor(final Class<?> type) {
         Constructor target = null;
         for (Constructor ctor : type.getConstructors()) {
-            if (ctor.isAnnotationPresent(Inject.class) || ctor.isAnnotationPresent(javax.inject.Inject.class)) {
+            if (ctor.isAnnotationPresent(Inject.class)) {
                 target = ctor;
                 break;
+            }
+            // manual search to avoid direct dependency on javax and jakarta namespace
+            for (java.lang.annotation.Annotation ann : ctor.getAnnotations()) {
+                final String name = ann.annotationType().getName();
+                if (JAVAX_INJECT.equals(name) || JAKARTA_INJECT.equals(name)) {
+                    target = ctor;
+                    break;
+                }
             }
         }
         return target;

@@ -3,7 +3,7 @@ package ru.vyarus.guice.ext.generator.support;
 import ru.vyarus.guice.ext.core.generator.ScopeAnnotation;
 import ru.vyarus.guice.ext.generator.support.aop.CustomAop;
 
-import javax.inject.Singleton;
+import com.google.inject.Singleton;
 import java.lang.annotation.ElementType;
 
 /**

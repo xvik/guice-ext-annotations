@@ -1,3 +1,7 @@
+* Avoid direct javax.inject annotations usage for jakarta.inject compatibility
+  (guice native annotations used instead)
+  - Dynamic class generation would support both annotations
+
 ### 2.0.0 (2023-04-02)
 * Switch to jakarta.annotation-api 2 (jakarta. namespace)
 
