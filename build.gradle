@@ -20,7 +20,7 @@ wrapper {
 repositories { mavenLocal(); mavenCentral() }
 dependencies {
     implementation 'com.google.inject:guice:5.1.0'
-    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'org.slf4j:slf4j-api:2.0.12'
     implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
     optional 'org.javassist:javassist:3.30.2-GA'
 
