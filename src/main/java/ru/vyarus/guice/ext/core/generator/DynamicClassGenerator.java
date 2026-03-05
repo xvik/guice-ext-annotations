@@ -233,7 +233,6 @@ public final class DynamicClassGenerator {
         return target;
     }
 
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     private static ParameterAnnotationsAttribute copyConstructorParametersAnnotations(
             final ClassPool classPool, final ConstPool constPool, final Constructor ctor,
             final boolean anchorAdded) throws Exception {
@@ -255,7 +254,6 @@ public final class DynamicClassGenerator {
         return paramAnns;
     }
 
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static void applyScopeAnnotation(final ClassPool classPool, final AnnotationsAttribute annotations,
                                              final AnnotatedElement source,
                                              final Class<? extends java.lang.annotation.Annotation> scope)

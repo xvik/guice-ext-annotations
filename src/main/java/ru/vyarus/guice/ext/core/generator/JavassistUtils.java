@@ -26,7 +26,6 @@ public final class JavassistUtils {
      * @return javassist annotation object (copy of original annotation)
      * @throws Exception on errors
      */
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public static Annotation copyAnnotation(final ClassPool classPool, final ConstPool constPool,
                                             final java.lang.annotation.Annotation ann) throws Exception {
         final Class<? extends java.lang.annotation.Annotation> annotationType = ann.annotationType();

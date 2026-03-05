@@ -27,7 +27,7 @@ public class AnnotatedFieldTypeListener<T extends Annotation> implements TypeLis
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    @SuppressWarnings("PMD.UseDiamondOperator")
     public <I> void hear(final TypeLiteral<I> type, final TypeEncounter<I> encounter) {
         final Class<? super I> actualType = type.getRawType();
         if (!Utils.isPackageValid(actualType)) {

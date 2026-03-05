@@ -17,7 +17,7 @@ import java.util.Map;
  * @author Vyacheslav Rusakov
  * @since 08.12.2014
  */
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes", "PMD.AvoidUsingShortType"})
+@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
 public class AnnotationMemberValueVisitor implements MemberValueVisitor {
 
     private static final Map<Class<?>, CtClass> PRIMITIVES = ImmutableMap.<Class<?>, CtClass>builder()

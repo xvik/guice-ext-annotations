@@ -24,7 +24,7 @@ public class GeneralTypeListener<T> implements TypeListener {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "PMD.UseDiamondOperator"})
     public <I> void hear(final TypeLiteral<I> type, final TypeEncounter<I> encounter) {
         final Class<? super I> actualType = type.getRawType();
         if (!Utils.isPackageValid(actualType)) {

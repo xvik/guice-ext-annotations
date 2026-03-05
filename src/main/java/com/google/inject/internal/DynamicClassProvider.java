@@ -35,7 +35,6 @@ public class DynamicClassProvider implements Provider<Object> {
     }
 
     @Override
-    @SuppressWarnings({"PMD.PreserveStackTrace", "PMD.NullAssignment"})
     public Object get() {
         try (InternalContext context = ((InjectorImpl) injector).enterContext()) {
             // check if (possibly) child context contains anchor bean definition
