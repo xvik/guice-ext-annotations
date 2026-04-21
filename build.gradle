@@ -23,12 +23,12 @@ wrapper {
 repositories { mavenLocal(); mavenCentral() }
 dependencies {
     implementation 'com.google.inject:guice:5.1.0'
-    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'org.slf4j:slf4j-api:2.0.17'
     implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
     optional 'org.javassist:javassist:3.31.0-GA'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.slf4j:slf4j-nop:1.7.36'
+    testImplementation 'org.slf4j:slf4j-nop:2.0.17'
 }
 
 group = 'ru.vyarus'
